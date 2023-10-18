@@ -8,7 +8,7 @@ export default {
         mobile: "300px",
       },
       colors: {
-        gray: "#394867",
+        darkGray: "#394867",
       },
     },
   },
