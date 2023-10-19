@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import Card from "../Utils/Card";
+import Ratings from "./Ratings";
 
 const Product = ({ product }) => {
   return (
@@ -18,11 +19,15 @@ const Product = ({ product }) => {
         <div>
           <div className="pb-2">
             <Link to={`/product/${product._id}`}>
-              <h2 className="text-sm text-left">{product.name}</h2>
+              <h2 className="text-sm text-left h-10 overflow-hidden truncate whitespace-no-wrap">
+                {product.name}
+              </h2>
             </Link>
           </div>
-          {/* {product._id} */}
-          <p>{product.price}</p>
+
+          <Ratings rating={4.5} ratingNumber={200} />
+
+          <p>${product.price}</p>
         </div>
       </Card>
     </li>

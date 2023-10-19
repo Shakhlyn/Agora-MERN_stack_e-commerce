@@ -1,5 +1,5 @@
 import { FaShoppingCart, FaUser } from "react-icons/fa";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import useWindowWidth from "../hooks/useWindowWidth";
 
