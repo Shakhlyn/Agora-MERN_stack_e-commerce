@@ -25,7 +25,7 @@ const Product = ({ product }) => {
             </Link>
           </div>
 
-          <Ratings rating={4.5} ratingNumber={200} />
+          <Ratings rating={product.rating} ratingNumber={product.numReviews} />
 
           <p>${product.price}</p>
         </div>

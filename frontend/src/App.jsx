@@ -5,9 +5,9 @@ import Footer from "./components/Footer.jsx";
 
 export default function App() {
   return (
-    <dv>
+    <dv className="flex flex-col h-screen">
       <Header />
-      <main className="py-8 w-11/12 m-auto ">
+      <main className="py-8 w-11/12 mx-auto mb-auto ">
         <Outlet />
       </main>
       <Footer />
