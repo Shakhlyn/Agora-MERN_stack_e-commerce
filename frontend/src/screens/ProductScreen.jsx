@@ -19,6 +19,7 @@ const ProductScreen = () => {
       try {
         const response = await axios.get(
           `http://localhost:3000/api/products/${productId}`
+          // `api/products/${productId}`
         );
         // console.log(response.data.data);
         setProduct(response.data.data);

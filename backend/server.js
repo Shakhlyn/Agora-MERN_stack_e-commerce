@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
 
+import { notFound, errorHanlder } from "./middleware/errorMiddleware.js";
 import connectDB from "./config/db.js";
-import products from "./data/products.js";
+import productRoutes from "./routes/productRoutes.js";
+// import Product from "./Models/productModel.js";
 
 const port = process.env.PORT;
 
@@ -21,28 +23,10 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/api/products", (req, res) => {
-  res.status(200).json({
-    status: "success",
-    data: products,
-  });
-});
+app.use("/api/products", productRoutes);
 
-app.get("/api/products/:id", (req, res) => {
-  const { id } = req.params;
-  const product = products.find((el) => el._id === id);
-  if (product) {
-    res.status(200).json({
-      status: "success",
-      data: product,
-    });
-  } else {
-    res.status(404).json({
-      status: "error",
-      message: "Product not found",
-    });
-  }
-});
+app.use(notFound);
+app.use(errorHanlder);
 
 app.listen(port, () => {
   console.log(`The server is running on port ${port}`);
