@@ -5,12 +5,12 @@ import Footer from "./components/Footer.jsx";
 
 export default function App() {
   return (
-    <dv className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen">
       <Header />
       <main className="py-8 w-11/12 mx-auto mb-auto ">
         <Outlet />
       </main>
       <Footer />
-    </dv>
+    </div>
   );
 }

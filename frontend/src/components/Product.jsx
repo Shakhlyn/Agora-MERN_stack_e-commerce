@@ -8,7 +8,7 @@ const Product = ({ product }) => {
     <li>
       <Card>
         <div className="rounded-sm pb-8">
-          <Link to={`/product/${product._id}`}>
+          <Link to={`/products/${product._id}`}>
             <img
               src={product.image}
               alt="product picture"
@@ -18,7 +18,7 @@ const Product = ({ product }) => {
         </div>
         <div>
           <div className="pb-2">
-            <Link to={`/product/${product._id}`}>
+            <Link to={`/products/${product._id}`}>
               <h2 className="text-sm text-left h-10 overflow-hidden truncate whitespace-no-wrap">
                 {product.name}
               </h2>

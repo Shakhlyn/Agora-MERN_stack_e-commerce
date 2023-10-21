@@ -20,7 +20,7 @@ const router = createBrowserRouter(
       <Route path="" element={<HomeScreen />} />
       <Route path="login" element={<LoginScreen />} />
       <Route path="cart" element={<CartScreen />} />
-      <Route path="product/:id" element={<ProductScreen />} />
+      <Route path="products/:id" element={<ProductScreen />} />
     </Route>
   )
 );
