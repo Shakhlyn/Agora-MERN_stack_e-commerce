@@ -1,33 +1,26 @@
-// import products from "../products.js";
 import Product from "../components/Product.jsx";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import Loader from "../components/Loader.jsx";
+import { useGetProductsQuery } from "../slices/productsApiSlice.js";
 
 const HomeScreen = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/api/products");
-        // const response = await axios.get("api/products");
-        setProducts(response.data.data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  const { data, isLoading, isError, isSuccess, error } = useGetProductsQuery();
 
   return (
     <>
-      <h1 className=" text-2xl font-bold ">Latest Products</h1>
-      <ul className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 mobile:grid-cols-2 mobile:gap-6 sm:gap-4 ">
-        {products.map((product) => {
-          return <Product key={product._id} product={product} />;
-        })}
-      </ul>
+      {isLoading && <Loader />}
+
+      {isError && <div>{error?.data?.message || error.error} </div>}
+
+      {isSuccess && (
+        <>
+          <h1 className=" text-2xl font-bold ">Latest Products</h1>
+          <ul className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 mobile:grid-cols-2 mobile:gap-6 sm:gap-4 ">
+            {data.data.map((product) => {
+              return <Product key={product._id} product={product} />;
+            })}
+          </ul>
+        </>
+      )}
     </>
   );
 };
