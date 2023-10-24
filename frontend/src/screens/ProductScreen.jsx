@@ -1,17 +1,29 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 // import products from "../products";
-import Button from "../Utils/LinkButton";
+import LinkButton from "../Utils/LinkButton";
 import Card from "../Utils/Card";
 import Ratings from "../components/Ratings";
-import LinkButton from "../Utils/LinkButton";
+import Button from "../components/Button";
 import Loader from "../components/Loader";
-import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
 import Message from "../components/message";
+import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
+import { addToCart } from "../slices/cartSlice";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [qty, setQty] = useState(1);
+
+  const changeQtyHandler = (e) => {
+    setQty(Number(e.target.value));
+  };
 
   const {
     data: product,
@@ -21,9 +33,16 @@ const ProductScreen = () => {
     error,
   } = useGetProductDetailsQuery(productId);
 
+  const addToCartHandler = () => {
+    const productWithQty = { ...product.data, qty };
+    // console.log(productWithQty);
+    dispatch(addToCart(productWithQty));
+    navigate("/cart");
+  };
+
   return (
     <>
-      <Button to="/" button="Go back" />
+      <LinkButton to="/" button="Go Home" />
       {isLoading && <Loader />}
       {isError && (
         <Message variant="success">
@@ -67,7 +86,27 @@ const ProductScreen = () => {
                   </p>
                 </div>
                 <hr />
-                <LinkButton to="/cart" button="Add to Cart" />
+                <div className="flex flex-row justify-between">
+                  <p>Quantity</p>
+                  <select
+                    name="qty"
+                    id="qty"
+                    value={qty}
+                    onChange={changeQtyHandler}
+                  >
+                    {[...Array(product.data.countInStock).keys()].map((x) => (
+                      <option value={x + 1} key={x + 1}>
+                        {x + 1}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>{qty}</div>
+                <hr />
+                <Button>
+                  <button onClick={addToCartHandler}>Add to Cart</button>
+                </Button>
+                {/* Here, onclick must be in button, not in any others  */}
               </div>
             </Card>
           </div>
