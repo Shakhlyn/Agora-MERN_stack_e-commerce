@@ -1,6 +1,7 @@
 import Product from "../components/Product.jsx";
 import Loader from "../components/Loader.jsx";
 import { useGetProductsQuery } from "../slices/productsApiSlice.js";
+import Message from "../components/message.jsx";
 
 const HomeScreen = () => {
   const { data, isLoading, isError, isSuccess, error } = useGetProductsQuery();
@@ -9,7 +10,11 @@ const HomeScreen = () => {
     <>
       {isLoading && <Loader />}
 
-      {isError && <div>{error?.data?.message || error.error} </div>}
+      {isError && (
+        <Message variant="error">
+          {error?.data?.message || error.error}{" "}
+        </Message>
+      )}
 
       {isSuccess && (
         <>

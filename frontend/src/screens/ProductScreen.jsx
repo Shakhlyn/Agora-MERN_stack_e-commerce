@@ -8,6 +8,7 @@ import Ratings from "../components/Ratings";
 import LinkButton from "../Utils/LinkButton";
 import Loader from "../components/Loader";
 import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
+import Message from "../components/message";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -24,7 +25,11 @@ const ProductScreen = () => {
     <>
       <Button to="/" button="Go back" />
       {isLoading && <Loader />}
-      {isError && <div>{error?.data?.message || error.error} </div>}
+      {isError && (
+        <Message variant="success">
+          <>{error?.data?.message || error.error} </>
+        </Message>
+      )}
       {isSuccess && (
         <div className="grid grid-cols-12 gap-6 mt-8">
           <div className=" mobile:col-span-8 mobile:col-start-3 md:col-span-4">
@@ -33,7 +38,6 @@ const ProductScreen = () => {
               alt={product.data.name}
               className=" rounded-md "
             />
-            {/* <p>IMAGE</p> */}
           </div>
           <div className=" mobile:col-span-7 md:col-span-5 flex flex-col gap-4 ">
             <h3 className=" text-lg font-semibold ">{product.data.name}</h3>
