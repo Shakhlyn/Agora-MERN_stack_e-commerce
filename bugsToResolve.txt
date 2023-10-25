@@ -1,0 +1,8 @@
+1. User can take more items than that are in inventory
+    -- we could remove the functionality of adding same items multiple times from the productScreen.jsx component.
+    -- we can check what is the amount of the item that is in the cart through redux.
+    -- we could set selectable options according to the item number for the user's localStorge or rudux store.
+
+2. Move Card.jsx and LinkButton.jsx from Utils to components
+
+3. 

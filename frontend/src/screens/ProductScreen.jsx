@@ -101,7 +101,7 @@ const ProductScreen = () => {
                     ))}
                   </select>
                 </div>
-                <div>{qty}</div>
+                {/* <div>{qty}</div> */}
                 <hr />
                 <Button>
                   <button onClick={addToCartHandler}>Add to Cart</button>
