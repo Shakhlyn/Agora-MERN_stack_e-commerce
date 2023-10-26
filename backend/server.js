@@ -1,7 +1,9 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import dotenv from "dotenv";
-dotenv.config();
+import cookieParser from "cookie-parser";
 import cors from "cors";
+
+dotenv.config();
 
 import { notFound, errorHanlder } from "./middleware/errorMiddleware.js";
 import connectDB from "./config/db.js";
@@ -15,9 +17,13 @@ connectDB(); //connect to the mongodb database.
 
 const app = express();
 
+app.use(express.json()); //body parser
+app.use(urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(cors());
 
 app.get("/", (req, res) => {
+  console.log(req.cookies);
   res.status(200).json({
     port: `${port}`,
     message: "Got it!",

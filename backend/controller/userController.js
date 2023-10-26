@@ -1,11 +1,29 @@
 import catchAsync from "../middleware/catchAsync.js";
 import User from "../models/userModel.js";
+import generateToken from "../utils/generateToken.js";
 
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
 // @access  Public
 const authUser = catchAsync(async (req, res) => {
-  res.status(200).send("Auth user");
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+  const isPasswordMatched = await user.matchPassword(password);
+
+  if (user && isPasswordMatched) {
+    generateToken(res, user._id);
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid email or password");
+  }
 });
 
 // @desc    Register a new user
