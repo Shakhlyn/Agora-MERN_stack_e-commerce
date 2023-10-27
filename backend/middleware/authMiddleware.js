@@ -13,7 +13,6 @@ const protect = catchAsync(async (req, res, next) => {
   if (token) {
     try {
       const decodedObject = jwt.verify(token, process.env.JWT_SECRET);
-      console.log(`From authMiddleware's protect: ${decodedObject}`);
 
       req.user = await User.findById(decodedObject.userId).select("-password");
 
