@@ -101,12 +101,11 @@ const ProductScreen = () => {
                     ))}
                   </select>
                 </div>
-                {/* <div>{qty}</div> */}
                 <hr />
-                <Button>
-                  <button onClick={addToCartHandler}>Add to Cart</button>
-                </Button>
-                {/* Here, onclick must be in button, not in any others  */}
+
+                <button type="submit" onClick={addToCartHandler}>
+                  <Button>Add to Cart</Button>
+                </button>
               </div>
             </Card>
           </div>

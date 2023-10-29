@@ -14,6 +14,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 
     getProductDetails: builder.query({
       query: (productId) => ({
+        //this parameter is passed from the 'jsx/ component, for this case, 'productScreen'
         url: `${PRODUCTS_URL}/${productId}`,
       }),
       keepUnusedDataFor: 5,

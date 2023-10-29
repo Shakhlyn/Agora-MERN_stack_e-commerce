@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -35,7 +35,6 @@ const CartScreen = () => {
   };
 
   const totalItems = cart.cartItems.reduce((acc, item) => acc + item.qty, 0);
-  const isDisabled = totalItems === 0;
 
   return (
     <div className=" grid grid-cols-12 gap-10 ">
@@ -110,9 +109,9 @@ const CartScreen = () => {
           <hr className="my-8 " />
 
           {totalItems > 0 ? (
-            <Button>
-              <button onClick={checkoutHandler}>Proceed to Checkout</button>
-            </Button>
+            <button type="submit" onClick={checkoutHandler}>
+              <Button>Proceed to Checkout</Button>
+            </button>
           ) : (
             <p className=" text-center ">Proceed to Checkout</p>
           )}

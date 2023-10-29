@@ -9,7 +9,11 @@ const authUser = catchAsync(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
-  const isPasswordMatched = await user.matchPassword(password);
+
+  let isPasswordMatched;
+  if (user) {
+    isPasswordMatched = await user.matchPassword(password);
+  }
 
   if (user && isPasswordMatched) {
     generateToken(res, user._id);

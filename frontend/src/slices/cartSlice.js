@@ -37,7 +37,7 @@ const cartSlice = createSlice({
 
     removeFromCart: (state, action) => {
       state.cartItems = state.cartItems.filter(
-        (el) => el._id !== action.payload //since here, we use item, we have to pass item instead of id from calling function.
+        (el) => el._id !== action.payload //since here, we use id, we have to pass item.id instead of item from calling function component, cartScreen.
       );
       return updateCart(state);
     },

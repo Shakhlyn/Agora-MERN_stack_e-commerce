@@ -4,11 +4,15 @@ import { useSelector } from "react-redux";
 
 import useWindowWidth from "../hooks/useWindowWidth";
 
+import Dropdown from "./DropDown";
+
 const Header = () => {
   const windowWidth = useWindowWidth();
   const isLessThanSm = windowWidth < 640;
 
   const { cartItems } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.auth);
+
   const nCartItems = cartItems.reduce((acc, cur) => acc + cur.qty, 0);
 
   const styleClass = `absolute -top-2 -right-2 bg-blue-500 text-white rounded-full ${
@@ -34,16 +38,22 @@ const Header = () => {
             </Link>
           </li>
           <li className="text-gray-400 ">
-            <Link to="/login">
-              <div className="flex flex-row items-center justify-between gap-1 ">
-                {!isLessThanSm && (
-                  <p>
-                    <FaUser />
-                  </p>
-                )}
-                <p>Login</p>
-              </div>
-            </Link>
+            {userInfo ? (
+              <Dropdown
+                username={userInfo.name.trim().split(" ").slice(0)[0]}
+              />
+            ) : (
+              <Link to="/login">
+                <div className="flex flex-row items-center justify-between gap-1 ">
+                  {!isLessThanSm && (
+                    <p>
+                      <FaUser />
+                    </p>
+                  )}
+                  <p>Login</p>
+                </div>
+              </Link>
+            )}
           </li>
         </ul>
       </div>

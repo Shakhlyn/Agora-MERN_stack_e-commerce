@@ -8,17 +8,19 @@ import Button from "../components/Button";
 import FormContainer from "../components/FormContainer";
 import Loader from "../components/Loader";
 
-import { useLoginMutation } from "../slices/usersApiSlice";
-import { setCredentials } from "../slices/authSlice";
+import { useRegisterMutation } from "../slices/usersApiSlice"; //for api request
+import { setCredentials } from "../slices/authSlice"; //to set localStorage
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [register, { isLoading }] = useRegisterMutation();
   const { userInfo } = useSelector((state) => {
     return state.auth;
   });
@@ -36,30 +38,50 @@ const LoginScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    const trimmedName = name.trim();
     const trimmedEmail = email.trim();
     const trimmedPassword = password.trim();
-    try {
-      const response = await login({
-        email: trimmedEmail,
-        password: trimmedPassword,
-      }).unwrap(); //if we use unwrap(), it will automatically extract data from the api request by unwrapping; we don't need to extract with "response.userInfo"
-      dispatch(
-        setCredentials({
-          ...response,
-        })
-      );
-      navigate(redirect);
-    } catch (error) {
-      console.log(error);
-      toast.error(error?.data?.message || error.error);
+    const trimmedPasswordConfirm = passwordConfirm.trim();
+
+    if (trimmedPassword !== trimmedPasswordConfirm) {
+      toast.error("Passwords are different!");
+    } else {
+      try {
+        const response = await register({
+          name: trimmedName,
+          email: trimmedEmail,
+          password: trimmedPassword,
+        }).unwrap(); //if we use unwrap(), it will automatically extract data from the api request by unwrapping; we don't need to extract with "response.userInfo"
+        dispatch(
+          setCredentials({
+            ...response,
+          })
+        );
+        navigate(redirect);
+      } catch (error) {
+        console.log(error);
+        toast.error(error?.data?.message || error.error);
+      }
     }
   };
 
   return (
     <FormContainer>
-      <h1 className="text-3xl font-bold mb-8">Log In</h1>
+      <h1 className="text-3xl font-bold mb-8">Sign Up</h1>
 
       <form onSubmit={submitHandler} className="space-y-4">
+        <div className="flex flex-col w-full max-w-md">
+          <label htmlFor="name">Name:</label>
+          <input
+            type="name"
+            className="border border-gray-300 rounded-md p-2"
+            placeholder="Enter Name"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+
         <div className="flex flex-col w-full max-w-md">
           <label htmlFor="email">Email address:</label>
 
@@ -75,7 +97,6 @@ const LoginScreen = () => {
 
         <div className="flex flex-col w-full max-w-md">
           <label htmlFor="password">Password:</label>
-
           <input
             type="password"
             className="border border-gray-300 rounded-md p-2"
@@ -86,9 +107,27 @@ const LoginScreen = () => {
           />
         </div>
 
+        <div className="flex flex-col w-full max-w-md">
+          <label htmlFor="passwordConfirm">Confirm Password:</label>
+          <input
+            type="password"
+            className="border border-gray-300 rounded-md p-2"
+            placeholder="Confirm your Password"
+            id="passwordConfirm"
+            value={passwordConfirm}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+          />
+        </div>
+        <div>
+          {name}
+          {email}
+          {password}
+          {passwordConfirm}
+        </div>
+
         <button>
           <Button type="submit" onClick={submitHandler}>
-            Log In
+            Sign up
           </Button>
         </button>
       </form>
@@ -96,14 +135,14 @@ const LoginScreen = () => {
       {isLoading && <Loader />}
 
       <div className="mt-8">
-        <span className="mr-4">Don't have an account?</span>
+        <span className="mr-4">Already have an account?</span>
         <LinkButton
-          to={redirect ? `/register?redirect=${redirect}` : "/register"}
-          button="Sign up!"
+          to={redirect ? `/login?redirect=${redirect}` : "/login"}
+          button="Log in!"
         ></LinkButton>
       </div>
     </FormContainer>
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;
