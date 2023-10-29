@@ -118,12 +118,6 @@ const RegisterScreen = () => {
             onChange={(e) => setPasswordConfirm(e.target.value)}
           />
         </div>
-        <div>
-          {name}
-          {email}
-          {password}
-          {passwordConfirm}
-        </div>
 
         <button>
           <Button type="submit" onClick={submitHandler}>

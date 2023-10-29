@@ -5,4 +5,4 @@
 
 2. Move Card.jsx and LinkButton.jsx from Utils to components
 
-3. 
+3. logout should reload the page automatically so that current state get updated.

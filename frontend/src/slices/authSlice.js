@@ -19,7 +19,6 @@ const authSlice = createSlice({
     },
 
     logout: (state, action) => {
-      console.log("logout clicked");
       localStorage.clear(); //if we want that the next user doesn't inherit the previous user's cart and shipping info
       state.userInfo = null;
       // localStorage.removeItem("userInfo"); //only remove the item of userInfor

@@ -8,13 +8,17 @@ import {
 } from "react-router-dom";
 import { Provider } from "react-redux";
 
-import App from "./App.jsx";
 import "./index.css";
+import App from "./App.jsx";
 import HomeScreen from "./screens/HomeScreen.jsx";
 import LoginScreen from "./screens/LoginScreen.jsx";
 import RegisterScreen from "./screens/RegisterScreen.jsx";
 import CartScreen from "./screens/CartScreen.jsx";
 import ProductScreen from "./screens/ProductScreen.jsx";
+import PrivateRoute from "./components/PrivateRoute";
+import ShippingScreen from "./screens/ShippingScreen.jsx";
+import PaymentMethodScreen from "./screens/PaymentMethodScreen";
+import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import store from "./store.js";
 
 const router = createBrowserRouter(
@@ -25,6 +29,13 @@ const router = createBrowserRouter(
       <Route path="register" element={<RegisterScreen />} />
       <Route path="cart" element={<CartScreen />} />
       <Route path="products/:id" element={<ProductScreen />} />
+
+      {/* Private Routes for Registered users */}
+      <Route path="" element={<PrivateRoute />}>
+        <Route path="shipping" element={<ShippingScreen />} />
+        <Route path="payment" element={<PaymentMethodScreen />} />
+        <Route path="placeorder" element={<PlaceOrderScreen />} />
+      </Route>
     </Route>
   )
 );

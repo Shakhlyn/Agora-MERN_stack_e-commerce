@@ -22,7 +22,6 @@ const Dropdown = ({ username }) => {
 
   const logoutHandler = async () => {
     try {
-      console.log("clicked logout");
       await logoutApi().unwrap();
       dispatch(logout());
       // dispatch(resetCart());
