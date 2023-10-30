@@ -6,3 +6,7 @@
 2. Move Card.jsx and LinkButton.jsx from Utils to components
 
 3. logout should reload the page automatically so that current state get updated.
+
+4. Need to update 'cartUtils.js' because same calculation logic is used in both backend and fronent. Make it reusable.
+
+5.
