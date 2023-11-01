@@ -5,16 +5,18 @@ import catchAsync from "./catchAsync.js";
 
 // User must be authenticated
 const protect = catchAsync(async (req, res, next) => {
-  let token;
+  // let token;
 
   // Read JWT from the 'jwt' cookie
-  token = req.cookies.jwt;
+  const token = req.cookies.jwt;
 
   if (token) {
     try {
       const decodedObject = jwt.verify(token, process.env.JWT_SECRET);
+      // console.log(`authmiddleware- decodedObject: ${decodedObject.id}`);
+      // console.log(decodedObject);
 
-      req.user = await User.findById(decodedObject.userId).select("-password");
+      req.user = await User.findById(decodedObject.id).select("-password");
 
       next();
     } catch (error) {

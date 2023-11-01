@@ -41,6 +41,8 @@ const Header = () => {
             {userInfo ? (
               <Dropdown
                 username={userInfo.name.trim().split(" ").slice(0)[0]}
+                // username={userInfo.name.split(" ").slice(0)[0]}
+                // user
               />
             ) : (
               <Link to="/login">

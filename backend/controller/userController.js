@@ -1,6 +1,7 @@
 import catchAsync from "../middleware/catchAsync.js";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
+import jwt from "jsonwebtoken";
 
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
@@ -16,14 +17,39 @@ const authUser = catchAsync(async (req, res) => {
   }
 
   if (user && isPasswordMatched) {
-    generateToken(res, user._id);
+    const signToken = (id) => {
+      return jwt.sign({ id: id }, process.env.JWT_SECRET, {
+        expiresIn: "30d",
+      });
+    };
 
-    res.status(200).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
+    // sign and send token, if everything is fine
+    const token = signToken(user._id);
+    console.log(`usercontroiller-50: token- ${token}`);
+
+    // sendToken(res, token);
+    res.cookie("jwt", token, {
+      // path: "/",
+      sameSite: "strict",
+      httpOnly: true,
+      secure: true,
     });
+
+    //send response
+    // sendResponse(res, 201, "success", user);
+    // ********************
+
+    res.status(200).json(
+      {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      }
+      // {
+      //   data: user,
+      // }
+    );
   } else {
     res.status(401);
     throw new Error("Invalid email or password");

@@ -27,7 +27,7 @@ const Dropdown = ({ username }) => {
       // dispatch(resetCart());
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      console.log(error?.error);
       toast.error(error?.data?.message || error.error);
     }
   };

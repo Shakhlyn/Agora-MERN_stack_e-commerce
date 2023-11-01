@@ -36,9 +36,15 @@ const LoginScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const trimmedEmail = email.trim();
-    const trimmedPassword = password.trim();
+
     try {
+      // console.log(email, password);
+      // const res = await login(email, password).unwrap();
+      // dispatch(setCredentials(...res));
+
+      const trimmedEmail = email.trim();
+      const trimmedPassword = password.trim();
+      // try {
       const response = await login({
         email: trimmedEmail,
         password: trimmedPassword,
@@ -48,6 +54,11 @@ const LoginScreen = () => {
           ...response,
         })
       );
+      // for (let key in response) {
+      //   console.log(response[key]);
+      // }
+      //   // console.log(`form loginScreen: ${response}`);
+
       navigate(redirect);
     } catch (error) {
       console.log(error);
