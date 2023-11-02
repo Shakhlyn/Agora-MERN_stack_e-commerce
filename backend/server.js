@@ -37,9 +37,8 @@ app.use(cookieParser({ sameSite: "Strict", secure: true }));
 
 // testing middleware:
 app.use((req, res, next) => {
-  console.log(`req.cookies.jwt: server : ${req.cookies.jwt}`);
-  // console.log(`req.user from server.js ${req.user}`);
-  // console.log(req.user);
+  // console.log(`req.cookies.jwt: server : ${req.cookies.jwt}`);
+  console.log(`req.user from server.js ${req.user}`);
   next();
 });
 

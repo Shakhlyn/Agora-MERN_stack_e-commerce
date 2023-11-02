@@ -25,7 +25,7 @@ const authUser = catchAsync(async (req, res) => {
 
     // sign and send token, if everything is fine
     const token = signToken(user._id);
-    console.log(`usercontroiller-50: token- ${token}`);
+    console.log(`usercontroiller-28: token- ${token}`);
 
     // sendToken(res, token);
     res.cookie("jwt", token, {
@@ -76,7 +76,24 @@ const registerUser = catchAsync(async (req, res) => {
   });
 
   if (user) {
-    generateToken(res, user._id);
+    const signToken = (id) => {
+      return jwt.sign({ id: id }, process.env.JWT_SECRET, {
+        expiresIn: "30d",
+      });
+    };
+
+    // sign and send token, if everything is fine
+    const token = signToken(user._id);
+    console.log(`usercontroiller-28: token- ${token}`);
+
+    // sendToken(res, token);
+    res.cookie("jwt", token, {
+      // path: "/",
+      sameSite: "strict",
+      httpOnly: true,
+      secure: true,
+    });
+    // generateToken(res, user._id);
 
     res.status(201).json({
       _id: user._id,

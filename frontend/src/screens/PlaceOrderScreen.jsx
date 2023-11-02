@@ -42,7 +42,7 @@ const PlaceOrderScreen = () => {
       navigate(`/orders/${res._id}`);
     } catch (err) {
       console.log(err);
-      toast.error(err);
+      // toast.error(err);
     }
   };
 
@@ -134,7 +134,8 @@ const PlaceOrderScreen = () => {
                 </li>
                 {error && (
                   <li className="py-2">
-                    <Message variant="error">{error.data.message}</Message>
+                    {/* <Message variant="error">{error.data.message}</Message> */}
+                    <Message variant="error">{error.data.stack}</Message>
                   </li>
                 )}
               </ul>
