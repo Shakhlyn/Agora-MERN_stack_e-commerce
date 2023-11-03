@@ -41,14 +41,13 @@ const Header = () => {
             {userInfo ? (
               <Dropdown
                 username={userInfo.name.trim().split(" ").slice(0)[0]}
-                // username={userInfo.name.split(" ").slice(0)[0]}
-                // user
+
               />
             ) : (
               <Link to="/login">
                 <div className="flex flex-row items-center justify-between gap-1 ">
                   {!isLessThanSm && (
-                    <p>
+                    <p> 
                       <FaUser />
                     </p>
                   )}

@@ -7,7 +7,7 @@ export const apiSlice = createApi({
   // baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
-    credentials: "include",
+    credentials: "include", // We must define 'credentials' to pass token to the front-end through fetching. Otherwise, browser won't get cookies.
   }),
   tagTypes: ["Product", "Order", "User"],
   endpoints: (builder) => ({}),

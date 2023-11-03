@@ -47,7 +47,8 @@ const Dropdown = ({ username }) => {
         <ul className="absolute mt-2 -right-8 w-32 rounded-md bg-darkGray text-gray-100 shadow-md text-sm py-2 z-10">
           <li>
             <Link
-              to="/"
+              onClick={toggleDropdown}
+              to="/profile"
               className="block px-4 py-2 hover:bg-gray-700 overflow-hidden"
             >
               Profile

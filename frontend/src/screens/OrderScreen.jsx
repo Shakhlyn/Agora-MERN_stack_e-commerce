@@ -1,15 +1,8 @@
-import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import Message from "../components/message";
 import Loader from "../components/Loader";
-import {
-  useGetOrderDetailsQuery,
-  // useDeliverOrderMutation,
-  // useGetPaypalClientIdQuery,
-  // usePayOrderMutation,
-} from "../slices/ordersApiSlice";
+import { useGetOrderDetailsQuery } from "../slices/ordersApiSlice";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -21,52 +14,7 @@ const OrderScreen = () => {
     error,
   } = useGetOrderDetailsQuery(orderId);
 
-  // const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
-
-  // const [deliverOrder, { isLoading: loadingDeliver }] =
-  //   useDeliverOrderMutation();
-
   const { userInfo } = useSelector((state) => state.auth);
-
-  // const {
-  //   data: paypal,
-  //   isLoading: loadingPayPal,
-  //   error: errorPayPal,
-  // } = useGetPaypalClientIdQuery();
-
-  // useEffect(() => {
-  //   if (!errorPayPal && !loadingPayPal && paypal.clientId) {
-  //     const loadPaypalScript = async () => {
-  //       // Load PayPal script here
-  //     };
-  //     if (order && !order.isPaid) {
-  //       if (!window.paypal) {
-  //         loadPaypalScript();
-  //       }
-  //     }
-  //   }
-  // }, [errorPayPal, loadingPayPal, order, paypal]);
-
-  // function onApprove(data, actions) {
-  //   return actions.order.capture().then(async function (details) {
-  //     try {
-  //       await payOrder({ orderId, details });
-  //       refetch();
-  //       toast.success("Order is paid");
-  //     } catch (err) {
-  //       toast.error(err?.data?.message || err.error);
-  //     }
-  //   });
-  // }
-
-  // function onError(err) {
-  //   toast.error(err.message);
-  // }
-
-  // const deliverHandler = async () => {
-  //   await deliverOrder(orderId);
-  //   refetch();
-  // };
 
   return isLoading ? (
     <Loader />
@@ -74,9 +22,9 @@ const OrderScreen = () => {
     <Message variant="error">{error.data.message}</Message>
   ) : (
     <div className="p-4">
-      <h1 className="text-3xl font-semibold mb-4">Order {order._id}</h1>
-      <div className="flex">
-        <div className="w-2/3 pr-8">
+      <h1 className="text-3xl font-semibold mb-4">Order </h1>
+      <div className=" grid grid-cols-12 ">
+        <div className=" col-span-12 md:col-span-8 pr-8">
           <div className="bg-white p-4 shadow-md">
             <h2 className="text-xl font-semibold mb-2">Shipping</h2>
             <p>
@@ -147,7 +95,7 @@ const OrderScreen = () => {
             )}
           </div>
         </div>
-        <div className="w-1/3">
+        <div className=" col-span-12 md:col-span-4 ">
           <div className="bg-white p-4 shadow-md">
             <h2 className="text-xl font-semibold mb-2">Order Summary</h2>
             <div className="flex justify-between py-2 border-b border-gray-200">
@@ -160,28 +108,19 @@ const OrderScreen = () => {
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200">
               <div>Tax</div>
-              <div>${order.taxPrice}</div>
+              <div>${order.tax}</div>
             </div>
             <div className="flex justify-between py-2">
               <div>Total</div>
               <div>${order.totalPrice}</div>
             </div>
-            {/* {!order.isPaid && ( */}
-            {/* <div> */}
-            {/* {loadingPay && <Loader />} */}
-            {/* PayPal buttons */}
-            {/* </div> */}
-            {/* )} */}
           </div>
           {userInfo &&
             userInfo.isAdmin &&
             order.isPaid &&
             !order.isDelivered && (
               <div className="bg-white p-4 shadow-md mt-4">
-                <button
-                  className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-                  // onClick={deliverHandler}
-                >
+                <button className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
                   Mark As Delivered
                 </button>
               </div>

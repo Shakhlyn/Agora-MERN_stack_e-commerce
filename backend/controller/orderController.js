@@ -12,7 +12,7 @@ const addOrderItems = catchAsync(async (req, res) => {
     itemsPrice,
     tax,
     shippingPrice,
-    totoalPrice,
+    totalPrice,
   } = req.body;
 
   if (orderItems && orderItems.length === 0) {
@@ -24,21 +24,19 @@ const addOrderItems = catchAsync(async (req, res) => {
     // our DB. This prevents a user paying whatever they want by hacking our client
     // side code - https://gist.github.com/bushblade/725780e6043eaf59415fbaf6ca7376ff
 
-    console.log(`from orderControll: ${req.user}`); //problems solved for this issue
     const order = new Order({
       orderItems: orderItems.map((item) => ({
         ...item,
         product: item._id,
         // _id: undefined,
       })),
-      // user: req.user._id,    //user doesn't get saved in the req. problem
       user: req.user._id,
       shippingAddress,
       paymentMethod,
       itemsPrice,
       tax,
       shippingPrice,
-      totoalPrice,
+      totalPrice,
     });
 
     const createOrder = await order.save();
@@ -51,7 +49,6 @@ const addOrderItems = catchAsync(async (req, res) => {
 // @route   GET /api/orders/myorders
 // @access  Private
 const getMyOrders = catchAsync(async (req, res) => {
-  // const orders = await Order.find({ user: req.user._id });
   const orders = await Order.find({ user: req.user._id });
   res.status(200).json(orders);
 });

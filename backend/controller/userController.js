@@ -1,6 +1,5 @@
 import catchAsync from "../middleware/catchAsync.js";
 import User from "../models/userModel.js";
-import generateToken from "../utils/generateToken.js";
 import jwt from "jsonwebtoken";
 
 // @desc    Auth user & get token
@@ -25,7 +24,7 @@ const authUser = catchAsync(async (req, res) => {
 
     // sign and send token, if everything is fine
     const token = signToken(user._id);
-    console.log(`usercontroiller-28: token- ${token}`);
+    // console.log(`usercontroiller-28: token- ${token}`);
 
     // sendToken(res, token);
     res.cookie("jwt", token, {
@@ -34,10 +33,6 @@ const authUser = catchAsync(async (req, res) => {
       httpOnly: true,
       secure: true,
     });
-
-    //send response
-    // sendResponse(res, 201, "success", user);
-    // ********************
 
     res.status(200).json(
       {

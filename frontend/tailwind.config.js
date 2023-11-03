@@ -10,6 +10,10 @@ export default {
       colors: {
         darkGray: "#394867",
       },
+      fontSize: {
+        mobile: ".6rem",
+        sm: ".8rem",
+      },
     },
   },
   plugins: [],
