@@ -2,7 +2,11 @@ import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Message from "../components/message";
 import Loader from "../components/Loader";
-import { useGetOrderDetailsQuery } from "../slices/ordersApiSlice";
+import Button from "../components/Button";
+import {
+  useGetOrderDetailsQuery,
+  useDeliverOrderMutation,
+} from "../slices/ordersApiSlice";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -15,6 +19,15 @@ const OrderScreen = () => {
   } = useGetOrderDetailsQuery(orderId);
 
   const { userInfo } = useSelector((state) => state.auth);
+
+  const [deliverOrder, { isLoading: isOrderDeliverLoading }] =
+    useDeliverOrderMutation();
+
+  const deliverOrderHandler = () => {
+    console.log("delivered");
+    deliverOrder(orderId);
+    refetch();
+  };
 
   return isLoading ? (
     <Loader />
@@ -117,13 +130,13 @@ const OrderScreen = () => {
           </div>
           {userInfo &&
             userInfo.isAdmin &&
-            order.isPaid &&
+            // order.isPaid &&    //it'll be implemented after integrating a payment mgt system.
             !order.isDelivered && (
-              <div className="bg-white p-4 shadow-md mt-4">
-                <button className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-                  Mark As Delivered
-                </button>
-              </div>
+              <button onClick={deliverOrderHandler} className="mt-4">
+                <Button>
+                  <div>Deliver</div>
+                </Button>
+              </button>
             )}
         </div>
       </div>

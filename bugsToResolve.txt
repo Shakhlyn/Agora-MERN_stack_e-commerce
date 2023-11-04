@@ -9,32 +9,13 @@
 
 4. Need to update 'cartUtils.js' because same calculation logic is used in both backend and fronent. Make it reusable.
 
-5.
+5. Integrate a payment method; bkash would be a good choice.
 
 
 problems:
 1. req.cookies doesn't get cookie. cookie sending doesn't work. thus, req.user doesn't get user.      SOLVED
 In postman it works fine, but not in browser. The problem is for rtk query. fetchBaseQuery. Normal fetch would work fine.
 
-Solution: 
-
-##set cors, cookieParser:
-
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:5173",
-  })
-);
-
-app.use(cookieParser({ sameSite: "Strict", secure: true }));
-
-## Modify 'apiSlice' -- fetchBaseQuery:
+solved: ## Modify 'apiSlice' -- fetchBaseQuery:
 we have to add  
     credentials: "include",  in fetchBaseQuery:
-
-baseQuery: fetchBaseQuery({
-  baseUrl: BASE_URL,
-  credentials: "include",
-}),
-
