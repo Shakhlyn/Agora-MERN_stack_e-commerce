@@ -8,7 +8,9 @@ import {
 } from "react-router-dom";
 import { Provider } from "react-redux";
 
+import store from "./store.js";
 import "./index.css";
+
 import App from "./App.jsx";
 import HomeScreen from "./screens/HomeScreen.jsx";
 import ProfileScreen from "./screens/ProfileScreen";
@@ -16,12 +18,17 @@ import LoginScreen from "./screens/LoginScreen.jsx";
 import RegisterScreen from "./screens/RegisterScreen.jsx";
 import CartScreen from "./screens/CartScreen.jsx";
 import ProductScreen from "./screens/ProductScreen.jsx";
+
 import PrivateRoute from "./components/PrivateRoute";
 import ShippingScreen from "./screens/ShippingScreen.jsx";
 import PaymentMethodScreen from "./screens/PaymentMethodScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
-import store from "./store.js";
+
+import AdminRoute from "./components/AdminRoute.jsx";
+import OrderListScreen from "./screens/admin/OrderListScreen.jsx";
+import ProductListScreen from "./screens/admin/ProductListScreen.jsx";
+import UserListScreen from "./screens/admin/UserListScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,6 +46,13 @@ const router = createBrowserRouter(
         <Route path="payment" element={<PaymentMethodScreen />} />
         <Route path="placeorder" element={<PlaceOrderScreen />} />
         <Route path="orders/:id" element={<OrderScreen />} />
+      </Route>
+
+      {/* Private Routes for Admin */}
+      <Route path="" element={<AdminRoute />}>
+        <Route path="admin/orderlist" element={<OrderListScreen />} />
+        <Route path="admin/productlist" element={<ProductListScreen />} />
+        <Route path="admin/userlist" element={<UserListScreen />} />
       </Route>
     </Route>
   )

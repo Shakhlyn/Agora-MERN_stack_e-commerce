@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -10,6 +10,8 @@ import { logout } from "../slices/authSlice";
 
 const Dropdown = ({ username }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const { userInfo } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,28 +46,67 @@ const Dropdown = ({ username }) => {
         </div>
       </button>
       {isDropdownOpen && (
-        <ul className="absolute mt-2 -right-8 w-32 rounded-md bg-darkGray text-gray-100 shadow-md text-sm py-2 z-10">
-          <li>
-            <Link
-              onClick={toggleDropdown}
-              to="/profile"
-              className="block px-4 py-2 hover:bg-gray-700 overflow-hidden"
-            >
-              Profile
-            </Link>
-          </li>
-          <hr />
-          <li>
-            <Link
-              onClick={logoutHandler}
-              to="/"
-              className="block px-4 py-2 hover:bg-gray-700 overflow-hidden"
-            >
-              Log out
-            </Link>
-          </li>
-          <hr />
-        </ul>
+        <>
+          <ul className="absolute mt-2 -right-8 w-32 rounded-md bg-darkGray text-gray-100 shadow-md text-sm py-2 z-10">
+            <li>
+              <Link
+                onClick={toggleDropdown}
+                to="/profile"
+                className="block px-4 py-2 hover:bg-gray-700 overflow-hidden"
+              >
+                Profile
+              </Link>
+            </li>
+            <hr />
+
+            {userInfo.isAdmin && (
+              <li>
+                <Link
+                  onClick={toggleDropdown}
+                  to="/admin/orderlist"
+                  className="block px-4 py-2 hover:bg-gray-700 overflow-hidden"
+                >
+                  Orders
+                </Link>
+              </li>
+            )}
+
+            {userInfo.isAdmin && (
+              <li>
+                <Link
+                  onClick={toggleDropdown}
+                  to="/admin/productlist"
+                  className="block px-4 py-2 hover:bg-gray-700 overflow-hidden"
+                >
+                  Products
+                </Link>
+              </li>
+            )}
+
+            {userInfo.isAdmin && (
+              <li>
+                <Link
+                  onClick={toggleDropdown}
+                  to="/admin/userlist"
+                  className="block px-4 py-2 hover:bg-gray-700 overflow-hidden"
+                >
+                  Users
+                </Link>
+              </li>
+            )}
+
+            <li>
+              <Link
+                onClick={logoutHandler}
+                to="/"
+                className="block px-4 py-2 hover:bg-gray-700 overflow-hidden"
+              >
+                Log out
+              </Link>
+            </li>
+            <hr />
+          </ul>
+        </>
       )}
     </div>
   );

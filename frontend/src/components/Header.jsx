@@ -37,17 +37,16 @@ const Header = () => {
               </div>
             </Link>
           </li>
-          <li className="text-gray-400 ">
+          <li className="text-gray-400 flex flex-row">
             {userInfo ? (
               <Dropdown
                 username={userInfo.name.trim().split(" ").slice(0)[0]}
-
               />
             ) : (
               <Link to="/login">
                 <div className="flex flex-row items-center justify-between gap-1 ">
                   {!isLessThanSm && (
-                    <p> 
+                    <p>
                       <FaUser />
                     </p>
                   )}
