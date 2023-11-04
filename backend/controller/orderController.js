@@ -88,7 +88,9 @@ const updateOrderToBeDelivered = catchAsync(async (req, res) => {
 // @route   GET /api/orders
 // @access  Private/Admin
 const getOrders = catchAsync(async (req, res) => {
-  res.json("Got all the orders for admin");
+  const orders = await Order.find({}).populate("user", "id name");
+
+  res.status(200).json(orders);
 });
 
 export {
