@@ -55,7 +55,15 @@ const OrderScreen = () => {
             </p>
             {order.isDelivered ? (
               <Message variant="success">
-                Delivered on {order.deliveredAt}
+                Delivered on{" "}
+                {new Date(order.deliveredAt).toLocaleString(undefined, {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                })}
               </Message>
             ) : (
               <Message>Not Delivered</Message>
