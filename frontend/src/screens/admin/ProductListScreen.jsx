@@ -14,13 +14,13 @@ import {
 const ProductListScreen = () => {
   const { data, isLoading, error, refetch } = useGetProductsQuery();
 
-  const [createOrder, { isLoading: createProductLoading }] =
+  const [createProduct, { isLoading: createProductLoading }] =
     useCreateProductMutation();
 
   const createProductHandler = async () => {
     if (window.confirm("Are you sure that you want to create a new Product")) {
       try {
-        await createOrder();
+        await createProduct();
         refetch(); //re-fetch useGetProductsQuery()
       } catch (err) {
         toast.error(err?.data?.message || err.error);
@@ -44,10 +44,11 @@ const ProductListScreen = () => {
         </button>
       </div>
 
+      {createProductLoading && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error.data.message}</Message>
+        <Message variant="error">{error.data.message}</Message>
       ) : (
         <>
           <table className="table-auto w-full text-mobile md:text-base">
@@ -72,7 +73,7 @@ const ProductListScreen = () => {
                   <td className="space-x-2">
                     <div className="flex flex-row justify-between">
                       <button className="hover:bg-white">
-                        <Link to={`/admin/product/${product._id}/edit`}>
+                        <Link to={`/admin/products/${product._id}/edit`}>
                           <Button>
                             <FaEdit className="text-slate-200 hover:text-slate-50" />
                           </Button>

@@ -45,16 +45,7 @@ const ProfileScreen = () => {
     setCity(shippingAddress.city);
     setPostalCode(shippingAddress.postalCode);
     setCountry(shippingAddress.country);
-  }, [
-    userInfo,
-    shippingAddress,
-    userInfo.name,
-    userInfo.email,
-    shippingAddress.address,
-    shippingAddress.city,
-    shippingAddress.postalCode,
-    shippingAddress.country,
-  ]);
+  }, [userInfo, shippingAddress]);
 
   const EditInfoHandler = async (e) => {
     e.preventDefault();

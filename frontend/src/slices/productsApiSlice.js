@@ -7,6 +7,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: PRODUCTS_URL,
       }),
+      providesTags: ["Products"],
       keepUnusedDataFor: 5,
       //specifies a cache lifetime in seconds
       //By default, unused data is removed from the cache after 60 seconds
@@ -27,6 +28,15 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTag: ["Product"],
     }),
+
+    updateProduct: builder.mutation({
+      query: (data) => ({
+        url: `${PRODUCTS_URL}/${data.productId}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTag: ["Products"],
+    }),
   }),
 });
 
@@ -34,4 +44,5 @@ export const {
   useGetProductsQuery,
   useGetProductDetailsQuery,
   useCreateProductMutation,
+  useUpdateProductMutation,
 } = productsApiSlice;
