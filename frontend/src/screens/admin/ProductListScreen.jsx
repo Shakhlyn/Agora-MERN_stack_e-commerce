@@ -9,6 +9,7 @@ import Loader from "../../components/Loader";
 import {
   useGetProductsQuery,
   useCreateProductMutation,
+  useDeleteProductMutation,
 } from "../../slices/productsApiSlice";
 
 const ProductListScreen = () => {
@@ -17,12 +18,27 @@ const ProductListScreen = () => {
   const [createProduct, { isLoading: createProductLoading }] =
     useCreateProductMutation();
 
+  const [deleteProduct, { isLoading: loadingProductDelete }] =
+    useDeleteProductMutation();
+
   const createProductHandler = async () => {
     if (window.confirm("Are you sure that you want to create a new Product")) {
       try {
         await createProduct();
         refetch(); //re-fetch useGetProductsQuery()
       } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    }
+  };
+
+  const deleteProductHandler = async (id) => {
+    if (window.confirm("Are you sure?")) {
+      try {
+        await deleteProduct(id);
+        refetch();
+        toast.success("Product Deleted!");
+      } catch (error) {
         toast.error(err?.data?.message || err.error);
       }
     }
@@ -80,7 +96,10 @@ const ProductListScreen = () => {
                         </Link>
                       </button>
 
-                      <button className="hover:bg-white">
+                      <button
+                        className="hover:bg-white"
+                        onClick={() => deleteProductHandler(product._id)}
+                      >
                         <Button>
                           <FaTrash className="text-red-700 hover:text-red-800" />
                         </Button>

@@ -1,19 +1,25 @@
-1. User can take more items than that are in inventory
+1. bug: User can take more items than that are in inventory
     -- we could remove the functionality of adding same items multiple times from the productScreen.jsx component.
     -- we can check what is the amount of the item that is in the cart through redux.
     -- we could set selectable options according to the item number for the user's localStorge or rudux store.
 
-2. Move Card.jsx and LinkButton.jsx from Utils to components
+2. bug: Move Card.jsx and LinkButton.jsx from Utils to components
 
-3. logout should reload the page automatically so that current state get updated.
+3. bug: logout should reload the page automatically so that current state get updated.
 
-4. Need to update 'cartUtils.js' because same calculation logic is used in both backend and fronent. Make it reusable.
+4. feat: Need to update 'cartUtils.js' because same calculation logic is used in both backend and fronent. Make it reusable.
 
-5. Integrate a payment method; bkash would be a good choice.
+5. feat: Integrate a payment method; bkash would be a good choice.
 
-6. Uploading static files: currently it is being done in an unconventional way.
+6. feat: Uploading static files: currently it is being done in an unconventional way.
 
-7. Using multer, we can upload any types of files; it should be fixed.
+7. bug: Using multer, we can upload any types of files; it should be fixed.
+
+8. bug: In 'ProductEditScreen', user can input negative value.
+
+9. feat: Create a form for creating products for only admin. Currently, by clicking a button namely 'create a product' admin can create a dummy product.
+
+10. bug: In 'CheckOutSteps', coloring the steps is not correct.
 
 
 problems:
@@ -23,3 +29,12 @@ In postman it works fine, but not in browser. The problem is for rtk query. fetc
 solved: ## Modify 'apiSlice' -- fetchBaseQuery:
 we have to add  
     credentials: "include",  in fetchBaseQuery:
+
+
+    getAllUsers: builder.query({
+      query: () => ({
+        url: USERS_URL,
+      }),
+      providesTags: ["users"],
+      keepUnusedDataFor: 20,
+    }),
