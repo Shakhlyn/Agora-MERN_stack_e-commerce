@@ -167,7 +167,9 @@ const updateUserProfile = catchAsync(async (req, res) => {
 // @route   GET /api/users
 // @access  Private/Admin
 const getUsers = catchAsync(async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({}).select(
+    "-password -__v -createdAt -updatedAt"
+  );
 
   res.status(200).json({
     status: "success",
@@ -176,33 +178,71 @@ const getUsers = catchAsync(async (req, res) => {
   });
 });
 
-// @desc    Delete user
-// @route   DELETE /api/users/:id
-// @access  Private/Admin
-const deleteUser = catchAsync(async (req, res) => {
-  res.status(200).json({
-    status: "success",
-    data: "user deleted",
-  });
-});
-
 // @desc    Get user by ID
 // @route   GET /api/users/:id
 // @access  Private/Admin
 const getUserById = catchAsync(async (req, res) => {
-  res.status(200).json({
-    status: "success",
-    data: "Get user by ID",
-  });
+  const user = await User.findById(req.params.id).select(
+    "-password -__v -createdAt -updatedAt"
+  );
+
+  if (user) {
+    res.status(200).json({
+      status: "success",
+      data: user,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found!");
+  }
+});
+
+// @desc    Delete user
+// @route   DELETE /api/users/:id
+// @access  Private/Admin
+const deleteUser = catchAsync(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    if (user.isAdmin) {
+      res.status(400);
+      throw new Error("Admin Cannot be deleted");
+    }
+
+    await User.deleteOne({ _id: user._id });
+
+    res.status(200).json({
+      status: "success",
+      messeage: "user deleted successfully",
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found.");
+  }
 });
 
 // @desc    Update user
 // @route   PUT /api/users/:id
 // @access  Private/Admin
 const updateUser = catchAsync(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  user.name = req.body.name || user.name;
+  user.email = req.body.email || user.email;
+  user.isAdmin = Boolean(req.body.isAdmin);
+
+  const updatedUser = await user.save();
+
   res.status(200).json({
-    status: "success",
-    data: "user updated",
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    isAdmin: updatedUser.isAdmin,
   });
 });
 
