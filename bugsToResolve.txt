@@ -11,6 +11,10 @@
 
 5. Integrate a payment method; bkash would be a good choice.
 
+6. Uploading static files: currently it is being done in an unconventional way.
+
+7. Using multer, we can upload any types of files; it should be fixed.
+
 
 problems:
 1. req.cookies doesn't get cookie. cookie sending doesn't work. thus, req.user doesn't get user.      SOLVED

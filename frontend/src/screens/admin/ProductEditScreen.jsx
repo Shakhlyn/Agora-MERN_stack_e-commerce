@@ -7,13 +7,16 @@ import { toast } from "react-toastify";
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
+  useUploadProductImageMutation,
 } from "../../slices/productsApiSlice";
+import { stringify } from "uuid";
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
+  const [image, setImage] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState(0);
@@ -29,14 +32,17 @@ const ProductEditScreen = () => {
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
 
+  const [uploadProductImage, { isLoading: loadingUpload }] =
+    useUploadProductImageMutation();
+
   const navigate = useNavigate();
 
   useEffect(() => {
     if (product) {
-      console.log(product.data);
+      // console.log(product.data);
       setName(product.data.name);
       setPrice(product.data.price);
-      //   setImage(product.data.image);
+      setImage(product.data.image);
       setBrand(product.data.brand);
       setCategory(product.data.category);
       setCountInStock(product.data.countInStock);
@@ -51,7 +57,7 @@ const ProductEditScreen = () => {
         productId,
         name,
         price,
-        // image,
+        image,
         brand,
         category,
         description,
@@ -60,6 +66,21 @@ const ProductEditScreen = () => {
       toast.success("Product updated");
       refetch();
       navigate("/admin/productlist");
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+
+  const uploadFileHandler = async (e) => {
+    const formData = new FormData();
+    console.log(e.target.files[0]);
+    formData.append("image", e.target.files[0]);
+    try {
+      const res = await uploadProductImage(formData).unwrap();
+      toast.success(res.message);
+      // res.message = '/images/<updated-name>'; extracted it from req.file.path in the backend's uploadRoutes.js.
+
+      setImage(res.image);
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -83,7 +104,7 @@ const ProductEditScreen = () => {
             {error.data.message}
           </Message>
         ) : (
-          <form onSubmit={submitHandler}>
+          <form onSubmit={submitHandler} encType="multipart/form-data">
             <div className="mb-4">
               <label
                 htmlFor="name"
@@ -115,6 +136,32 @@ const ProductEditScreen = () => {
                 placeholder="Enter price"
                 value={price || 0}
                 onChange={(e) => setPrice(parseFloat(e.target.value))}
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="image" className="block text-gray-700 font-bold">
+                Image
+              </label>
+              <input
+                id="image"
+                type="text"
+                placeholder="Enter image URL"
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+                className="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="file" className="block text-gray-700 font-bold">
+                Choose File
+              </label>
+              <input
+                id="file"
+                type="file"
+                name="image"
+                onChange={uploadFileHandler}
+                className="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
 

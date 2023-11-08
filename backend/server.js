@@ -10,6 +10,7 @@ import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 
 const port = process.env.PORT;
 
@@ -38,13 +39,14 @@ app.use(cookieParser({ sameSite: "Strict", secure: true }));
 // testing middleware:
 app.use((req, res, next) => {
   // console.log(`req.cookies.jwt: server : ${req.cookies.jwt}`);
-  console.log(`req.user from server.js ${req.user}`);
+  // console.log(`req.user from server.js ${req.user}`);
   next();
 });
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/upload", uploadRoutes);
 
 app.use(notFound);
 app.use(errorHanlder);

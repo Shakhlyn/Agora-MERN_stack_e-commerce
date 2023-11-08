@@ -48,7 +48,7 @@ const ProductListScreen = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="error">{error.data.message}</Message>
+        <Message variant="error">{error.data?.message}</Message>
       ) : (
         <>
           <table className="table-auto w-full text-mobile md:text-base">
