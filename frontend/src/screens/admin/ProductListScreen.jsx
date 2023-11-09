@@ -18,8 +18,7 @@ const ProductListScreen = () => {
   const [createProduct, { isLoading: createProductLoading }] =
     useCreateProductMutation();
 
-  const [deleteProduct, { isLoading: loadingProductDelete }] =
-    useDeleteProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
 
   const createProductHandler = async () => {
     if (window.confirm("Are you sure that you want to create a new Product")) {

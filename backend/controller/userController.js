@@ -79,7 +79,6 @@ const registerUser = catchAsync(async (req, res) => {
 
     // sign and send token, if everything is fine
     const token = signToken(user._id);
-    console.log(`usercontroiller-28: token- ${token}`);
 
     // sendToken(res, token);
     res.cookie("jwt", token, {

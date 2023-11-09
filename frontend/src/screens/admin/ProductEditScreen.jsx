@@ -9,7 +9,6 @@ import {
   useUpdateProductMutation,
   useUploadProductImageMutation,
 } from "../../slices/productsApiSlice";
-import { stringify } from "uuid";
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();

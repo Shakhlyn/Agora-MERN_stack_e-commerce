@@ -21,6 +21,8 @@
 
 10. bug: In 'CheckOutSteps', coloring the steps is not correct.
 
+11. bug: User can checkout a product even there is not stock in the store.
+
 
 problems:
 1. req.cookies doesn't get cookie. cookie sending doesn't work. thus, req.user doesn't get user.      SOLVED
@@ -30,11 +32,3 @@ solved: ## Modify 'apiSlice' -- fetchBaseQuery:
 we have to add  
     credentials: "include",  in fetchBaseQuery:
 
-
-    getAllUsers: builder.query({
-      query: () => ({
-        url: USERS_URL,
-      }),
-      providesTags: ["users"],
-      keepUnusedDataFor: 20,
-    }),

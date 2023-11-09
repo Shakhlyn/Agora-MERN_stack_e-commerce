@@ -6,18 +6,25 @@ import Button from "../../components/Button";
 import Message from "../../components/message";
 import Loader from "../../components/Loader";
 
-import { useGetAllUsersQuery } from "../../slices/usersApiSlice";
+import {
+  useGetAllUsersQuery,
+  useDeleteUserMutation,
+  useGetAUserQuery,
+  useUpdateUserMutation,
+} from "../../slices/usersApiSlice";
 
 const UserListScreen = () => {
   const { data, isLoading, error, refetch } = useGetAllUsersQuery();
 
-  // const [deleteUser, { isLoading: loadingUserDelete }] =
-  //   useDeleteUserMutation();
+  const [deleteUser, { isLoading: loadingUserDelete }] =
+    useDeleteUserMutation();
 
   const deleteUserHandler = async (id) => {
     if (window.confirm("Are you sure?")) {
       try {
-        toast.success("Product Deleted!");
+        await deleteUser(id);
+        refetch();
+        toast.success("User Deleted!");
       } catch (error) {
         toast.error(err?.data?.message || err.error);
       }
@@ -28,6 +35,7 @@ const UserListScreen = () => {
     <>
       <h1 className="text-2xl font-semibold">Users</h1>
 
+      {loadingUserDelete && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (
