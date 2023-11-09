@@ -81,10 +81,56 @@ const deleteProduct = catchAsync(async (req, res) => {
     throw new Error("Product not found");
   }
 });
+
+const createProductReview = catchAsync(async (req, res) => {
+  const { rating, comment } = req.body;
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    const isReviewed = product.reviews.find(
+      (review) => review.user.toString() === req.user._id.toString()
+    );
+    if (isReviewed) {
+      res.status(400);
+      throw new Error("You have already reviewed this product.");
+    }
+
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment: comment,
+      user: req.user._id,
+    };
+
+    product.reviews = [...product.reviews, review];
+
+    product.numReviews = product.reviews.length;
+
+    product.rating = parseFloat(
+      (
+        product.reviews.reduce((acc, review) => review.rating + acc, 0) /
+        product.numReviews
+      ).toFixed(1)
+    );
+
+    await product.save();
+
+    res.status(201).json({
+      status: "success",
+      message: "Review created",
+      // data: review
+    });
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
+
 export {
   getAllProducts,
   getProductById,
   createProduct,
   updateProduct,
   deleteProduct,
+  createProductReview,
 };
