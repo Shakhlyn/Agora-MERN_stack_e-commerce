@@ -2,17 +2,26 @@ import Product from "../Models/productModel.js";
 import catchAsync from "../middleware/catchAsync.js";
 
 const getAllProducts = catchAsync(async (req, res) => {
-  const products = await Product.find();
+  // const productPerPage = 4;
+  const productPerPage = process.env.PRODUCT_PER_PAGE;
+  const currentPage = Number(req.query.pageNumber) || 1; //this 'pageNumber' is given from the 'HomeScreen.jsx' and  'productsApiSlice'
+  const totalDocs = await Product.countDocuments();
+  const totalPages = Math.ceil(totalDocs / productPerPage);
+
+  const products = await Product.find()
+    .limit(productPerPage)
+    .skip(productPerPage * (currentPage - 1));
 
   res.status(200).json({
     status: "success",
     results: products.length,
-    data: products,
+    data: { products, currentPage, totalPages },
   });
 });
 
 const getProductById = catchAsync(async (req, res) => {
   const { id } = req.params;
+
   const product = await Product.findById(id);
 
   if (!product) {
