@@ -93,7 +93,7 @@ const PlaceOrderScreen = () => {
                       </div>
                       <div className="w-1/2">
                         <Link
-                          to={`/product/${item.product}`}
+                          to={`/products/${item._id}`}
                           className="text-blue-500"
                         >
                           {item.name}

@@ -13,7 +13,7 @@ const Product = ({ product }) => {
               src={product.image}
               alt="product picture"
               // className="rounded-md "
-              className="w-fit h-20 sm:h-30 md:h-56 lg:h-56 xl:h-96 object-cover rounded-sm "
+              className="min-w-full h-20 sm:h-30 md:h-30 lg:h-30 xl:h-44 object-cover rounded-md "
             />
           </Link>
         </div>
