@@ -11,7 +11,7 @@ import {
 } from "../../slices/productsApiSlice";
 
 const ProductEditScreen = () => {
-  const { id: productId } = useParams();
+  const { id: productId, pageNumber } = useParams();
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -64,7 +64,7 @@ const ProductEditScreen = () => {
       }).unwrap();
       toast.success("Product updated");
       refetch();
-      navigate("/admin/productlist");
+      navigate(`/admin/productlist/${pageNumber}`);
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -72,8 +72,8 @@ const ProductEditScreen = () => {
 
   const uploadFileHandler = async (e) => {
     const formData = new FormData();
-    console.log(e.target.files[0]);
     formData.append("image", e.target.files[0]);
+
     try {
       const res = await uploadProductImage(formData).unwrap();
       toast.success(res.message);
@@ -163,29 +163,6 @@ const ProductEditScreen = () => {
                 className="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
-
-            {/* <div className="mb-4">
-              <label
-                htmlFor="image"
-                className="block font-semibold text-gray-600"
-              >
-                Image
-              </label>
-              <input
-                type="text"
-                id="image"
-                className="w-full p-2 border rounded-md"
-                placeholder="Enter image url"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              />
-              <input
-                type="file"
-                className="mt-2"
-                onChange={uploadFileHandler}
-              />
-              {loadingUpload && <Loader />}
-            </div> */}
 
             <div className="mb-4">
               <label

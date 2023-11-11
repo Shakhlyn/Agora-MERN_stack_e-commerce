@@ -6,6 +6,8 @@ import Button from "../../components/Button";
 import Message from "../../components/message";
 import Loader from "../../components/Loader";
 
+import Paginate from "../../components/Paginate";
+
 import {
   useGetProductsQuery,
   useCreateProductMutation,
@@ -13,7 +15,10 @@ import {
 } from "../../slices/productsApiSlice";
 
 const ProductListScreen = () => {
-  const { data, isLoading, error, refetch } = useGetProductsQuery();
+  const { pageNumber } = useParams();
+  const { data, isLoading, error, refetch } = useGetProductsQuery({
+    pageNumber,
+  });
 
   const [createProduct, { isLoading: createProductLoading }] =
     useCreateProductMutation();
@@ -78,7 +83,7 @@ const ProductListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {data.data.map((product, index) => (
+              {data?.data?.products.map((product, index) => (
                 <tr key={product._id} className=" border-y-2 ">
                   <td className="text-center">{index + 1}</td>
                   <td className="text-center">{product.name}</td>
@@ -88,7 +93,12 @@ const ProductListScreen = () => {
                   <td className="space-x-2">
                     <div className="flex flex-row justify-between">
                       <button className="hover:bg-white">
-                        <Link to={`/admin/products/${product._id}/edit`}>
+                        <Link
+                          // to={`/admin/products/${product._id}/edit/${pageNumber}`}
+                          to={`/admin/products/${product._id}/edit/${
+                            pageNumber ? pageNumber : 1
+                          }`}
+                        >
                           <Button>
                             <FaEdit className="text-slate-200 hover:text-slate-50" />
                           </Button>
@@ -111,6 +121,11 @@ const ProductListScreen = () => {
           </table>
         </>
       )}
+      <Paginate
+        totalPages={data?.data?.totalPages}
+        currentPage={data?.data?.currentPage}
+        isAdmin={true}
+      />
     </>
   );
 };
