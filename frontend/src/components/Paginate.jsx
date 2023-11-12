@@ -14,7 +14,6 @@ const Paginate = ({
           {[...Array(totalPages).keys()].map((x) => (
             <li key={x + 1}>
               <Link
-                // to={!isAdmin ? `/page/${x + 1}` : `/admin/productlist/${x + 1}`}
                 to={
                   !isAdmin
                     ? searchKeyword

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import useWindowWidth from "../hooks/useWindowWidth";
 
 import Dropdown from "./DropDown";
+import SearchBox from "./SearchBox";
 
 const Header = () => {
   const windowWidth = useWindowWidth();
@@ -24,6 +25,9 @@ const Header = () => {
       <nav className=" flex flex-row justify-between items-center bg-darkGray px-10 py-2">
         <div className="text-3xl text-pink-100 ">
           <Link to="/">Agora</Link>
+        </div>
+        <div>
+          <SearchBox />
         </div>
         <div>
           <ul className="flex flex-row gap-4">
