@@ -2,13 +2,18 @@ import Product from "../Models/productModel.js";
 import catchAsync from "../middleware/catchAsync.js";
 
 const getAllProducts = catchAsync(async (req, res) => {
-  // const productPerPage = 4;
   const productPerPage = process.env.PRODUCT_PER_PAGE;
+
   const currentPage = Number(req.query.pageNumber) || 1; //this 'pageNumber' is given from the 'HomeScreen.jsx' and  'productsApiSlice'
-  const totalDocs = await Product.countDocuments();
+
+  const searchKeyword = req.query.searchKeyword
+    ? { name: { $regex: req.query.searchKeyword, $options: "i" } }
+    : {}; //'i' is for case-insensitve
+
+  const totalDocs = await Product.countDocuments({ ...searchKeyword });
   const totalPages = Math.ceil(totalDocs / productPerPage);
 
-  const products = await Product.find()
+  const products = await Product.find({ ...searchKeyword })
     .limit(productPerPage)
     .skip(productPerPage * (currentPage - 1));
 

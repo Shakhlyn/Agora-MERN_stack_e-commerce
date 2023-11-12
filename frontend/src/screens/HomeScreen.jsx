@@ -8,9 +8,10 @@ import { useGetProductsQuery } from "../slices/productsApiSlice.js";
 import Message from "../components/message.jsx";
 
 const HomeScreen = () => {
-  const { pageNumber } = useParams();
+  const { searchKeyword, pageNumber } = useParams();
 
   const { data, isLoading, isError, isSuccess, error } = useGetProductsQuery({
+    searchKeyword,
     pageNumber,
   });
 
@@ -39,6 +40,7 @@ const HomeScreen = () => {
           <Paginate
             totalPages={data.data.totalPages}
             currentPage={data.data.currentPage}
+            searchKeyword={searchKeyword}
           />
         </>
       )}

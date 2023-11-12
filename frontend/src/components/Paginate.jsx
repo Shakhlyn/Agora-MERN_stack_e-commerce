@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Paginate = ({ totalPages, currentPage, isAdmin = false }) => {
+const Paginate = ({
+  totalPages,
+  currentPage,
+  isAdmin = false,
+  searchKeyword = "",
+}) => {
   return (
     totalPages > 1 && (
       <div className="flex justify-center mt-16">
@@ -9,7 +14,14 @@ const Paginate = ({ totalPages, currentPage, isAdmin = false }) => {
           {[...Array(totalPages).keys()].map((x) => (
             <li key={x + 1}>
               <Link
-                to={!isAdmin ? `/page/${x + 1}` : `/admin/productlist/${x + 1}`}
+                // to={!isAdmin ? `/page/${x + 1}` : `/admin/productlist/${x + 1}`}
+                to={
+                  !isAdmin
+                    ? searchKeyword
+                      ? `/s/${searchKeyword}/page/${x + 1}`
+                      : `/page/${x + 1}`
+                    : `/admin/productlist/${x + 1}`
+                }
                 className={`${
                   x + 1 === currentPage
                     ? "bg-darkGray text-white"
