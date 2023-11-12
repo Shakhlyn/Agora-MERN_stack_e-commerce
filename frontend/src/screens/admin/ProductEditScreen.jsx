@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Message from "../../components/message";
 import Loader from "../../components/Loader";
+import Button from "../../components/Button";
 import FormContainer from "../../components/FormContainer";
 import { toast } from "react-toastify";
 import {
@@ -9,6 +10,7 @@ import {
   useUpdateProductMutation,
   useUploadProductImageMutation,
 } from "../../slices/productsApiSlice";
+import LinkButton from "../../Utils/LinkButton";
 
 const ProductEditScreen = () => {
   const { id: productId, pageNumber } = useParams();
@@ -87,12 +89,11 @@ const ProductEditScreen = () => {
 
   return (
     <>
-      <Link
+      <LinkButton
+        button="Go Back"
         to="/admin/productlist"
         className="text-blue-500 hover:underline my-3"
-      >
-        Go Back
-      </Link>
+      ></LinkButton>
       <FormContainer>
         <h1 className="text-2xl font-bold">Edit Product</h1>
         {loadingUpdate && <Loader />}
@@ -232,7 +233,11 @@ const ProductEditScreen = () => {
               />
             </div>
 
-            <button type="submit">Update</button>
+            <button type="submit">
+              <Button>
+                <p>Update</p>
+              </Button>
+            </button>
           </form>
         )}
       </FormContainer>

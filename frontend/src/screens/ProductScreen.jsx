@@ -76,14 +76,14 @@ const ProductScreen = () => {
       {isSuccess && (
         <>
           <div className="grid grid-cols-12 gap-6 mt-8">
-            <div className=" mobile:col-span-8 mobile:col-start-3 md:col-span-4">
+            <div className=" mobile:col-span-8 mobile:col-start-3 md:col-span-4 text-center ">
               <img
                 src={product.data.image}
                 alt={product.data.name}
-                className=" rounded-md "
+                className=" h-40 w-auto rounded-md "
               />
             </div>
-            <div className=" mobile:col-span-7 md:col-span-5 flex flex-col gap-4 ">
+            <div className=" mobile:col-span-5 md:col-span-5 flex flex-col gap-4 ">
               <h3 className=" text-lg font-semibold ">{product.data.name}</h3>
               <hr />
               <Ratings
@@ -93,7 +93,7 @@ const ProductScreen = () => {
               <hr />
               <p>Price: ${product.data.price}</p>
             </div>
-            <div className="mobile:col-span-5 md:col-span-3">
+            <div className="mobile:col-span-7 md:col-span-3">
               <Card>
                 <div className="flex flex-col gap-3">
                   <div className=" flex flex-row justify-between ">
@@ -223,9 +223,11 @@ const ProductScreen = () => {
                     <button
                       disabled={loadingProductReview}
                       type="submit"
-                      className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                      // className="bg-blue-500 text-white px-4 py-2 rounded-md"
                     >
-                      Submit
+                      <Button>
+                        <span>Submit</span>
+                      </Button>
                     </button>
                   </form>
                 ) : (
