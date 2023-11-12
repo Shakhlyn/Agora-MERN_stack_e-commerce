@@ -41,7 +41,7 @@ const ShippingScreen = () => {
 
   return (
     <FormContainer>
-      <CheckoutSteps step1 />
+      <CheckoutSteps step1 step2 />
 
       <h1 className="text-3xl font-bold mb-8">Shipping</h1>
 

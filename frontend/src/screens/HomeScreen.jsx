@@ -29,7 +29,7 @@ const HomeScreen = () => {
       {isSuccess && (
         <>
           <section>
-            <h1 className=" text-2xl font-bold ">Latest Products</h1>
+            {/* <h1 className=" text-2xl font-bold ">Latest Products</h1> */}
             <ul className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 mobile:grid-cols-2 mobile:gap-6 sm:gap-4 ">
               {data.data.products.map((product) => {
                 return <Product key={product._id} product={product} />;

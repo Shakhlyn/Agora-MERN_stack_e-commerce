@@ -36,13 +36,11 @@ const PlaceOrderScreen = () => {
         tax: cart.tax,
         totalPrice: cart.totalPrice,
       }).unwrap(); //It is an asynchronous process and will return 'Promise'. Thus, use 'unwrap' to handle this promise.
-      // console.log(res);
-      // console.log("clicked the res");
       dispatch(clearCartItems());
       navigate(`/orders/${res._id}`);
     } catch (err) {
       console.log(err);
-      // toast.error(err);
+      toast.error(err);
     }
   };
 
@@ -134,8 +132,8 @@ const PlaceOrderScreen = () => {
                 </li>
                 {error && (
                   <li className="py-2">
-                    {/* <Message variant="error">{error.data.message}</Message> */}
-                    <Message variant="error">{error.data.stack}</Message>
+                    <Message variant="error">{error.data.message}</Message>
+                    {/* <Message variant="error">{error.data.stack}</Message> */}
                   </li>
                 )}
               </ul>
