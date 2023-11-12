@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
-import { useGetProductsQuery } from "../slices/productsApiSlice";
-
 const SearchBox = () => {
   const { searchKeyword } = useParams();
   const [urlSearchKeyword, setUrlSearchKeyword] = useState(searchKeyword || "");
@@ -20,9 +18,12 @@ const SearchBox = () => {
   };
 
   return (
-    <form onSubmit={searchHandler} className="flex flex-row gap-3 text:mobile">
+    <form
+      onSubmit={searchHandler}
+      className="flex flex-row mobile:gap-2 md:gap-3 mx-1 w-auto"
+    >
       <input
-        className=" px-2 py-1 rounded-md "
+        className=" px-2 py-1 rounded-md text-mobile sm:text-sm "
         type="text"
         placeholder="Search what you want"
         name="search"
@@ -31,7 +32,7 @@ const SearchBox = () => {
       />
       <button
         type="submit"
-        className=" border-solid border-white bg-slate-200 text-darkGray px-2 py-1 rounded-lg"
+        className=" border-solid border-white bg-slate-200 text-darkGray px-2 py-1 rounded-lg text-mobile sm:text-sm"
       >
         Search
       </button>
