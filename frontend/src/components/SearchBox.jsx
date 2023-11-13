@@ -1,3 +1,5 @@
+import { FaSistrix } from "react-icons/fa6";
+
 import { useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
@@ -18,12 +20,9 @@ const SearchBox = () => {
   };
 
   return (
-    <form
-      onSubmit={searchHandler}
-      className="flex flex-row mobile:gap-2 md:gap-3 mx-1 w-auto"
-    >
+    <form onSubmit={searchHandler} className="flex flex-row mx-1">
       <input
-        className=" px-2 py-1 rounded-md text-mobile sm:text-sm "
+        className=" px-2 py-1 rounded-s text-mobile sm:text-sm mobile:w-32 md:w-96 "
         type="text"
         placeholder="Search what you want"
         name="search"
@@ -32,9 +31,10 @@ const SearchBox = () => {
       />
       <button
         type="submit"
-        className=" border-solid border-white bg-slate-200 text-darkGray px-2 py-1 rounded-lg text-mobile sm:text-sm"
+        className=" px-2 py-1 bg-slate-400 hover:bg-slate-300 text-slate-100 hover:text-darkGray duration-300 rounded-e text-mobile sm:text-sm"
       >
-        Search
+        <FaSistrix />
+        {/* Search */}
       </button>
     </form>
   );
