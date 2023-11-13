@@ -17,6 +17,12 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       //By default, unused data is removed from the cache after 60 seconds
     }),
 
+    getTopProducts: builder.query({
+      query: () => ({
+        url: `${PRODUCTS_URL}/top`,
+      }),
+    }),
+
     getProductDetails: builder.query({
       query: (productId) => ({
         //this parameter is passed from the 'jsx/ component, for this case, 'productScreen'
@@ -71,6 +77,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetProductsQuery,
+  useGetTopProductsQuery,
   useGetProductDetailsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,

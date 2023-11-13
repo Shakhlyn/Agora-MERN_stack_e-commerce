@@ -24,6 +24,16 @@ const getAllProducts = catchAsync(async (req, res) => {
   });
 });
 
+const getTopProducts = catchAsync(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+
+  res.status(200).json({
+    status: "success",
+    results: products.length,
+    data: products,
+  });
+});
+
 const getProductById = catchAsync(async (req, res) => {
   const { id } = req.params;
 
@@ -142,6 +152,7 @@ const createProductReview = catchAsync(async (req, res) => {
 
 export {
   getAllProducts,
+  getTopProducts,
   getProductById,
   createProduct,
   updateProduct,

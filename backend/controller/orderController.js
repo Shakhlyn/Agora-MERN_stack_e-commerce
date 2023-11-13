@@ -1,9 +1,7 @@
 import Order from "../Models/orderModel.js";
 import catchAsync from "../middleware/catchAsync.js";
 
-// @desc    Create new order
-// @route   POST /api/orders
-// @access  Private
+// Private
 const addOrderItems = catchAsync(async (req, res) => {
   const {
     orderItems,
@@ -45,17 +43,13 @@ const addOrderItems = catchAsync(async (req, res) => {
   }
 });
 
-// @desc    Get logged in user orders
-// @route   GET /api/orders/myorders
-// @access  Private
+// Private
 const getMyOrders = catchAsync(async (req, res) => {
   const orders = await Order.find({ user: req.user._id });
   res.status(200).json(orders);
 });
 
-// @desc    Get order by ID
-// @route   GET /api/orders/:id
-// @access  Private
+// Private
 const getOrderById = catchAsync(async (req, res) => {
   const order = await Order.findById(req.params.id).populate(
     "user",
@@ -70,16 +64,12 @@ const getOrderById = catchAsync(async (req, res) => {
   }
 });
 
-// @desc    Update order to paid
-// @route   PUT /api/orders/:id/pay
-// @access  Private
+// Private
 const updateOrderToBePaid = catchAsync(async (req, res) => {
   res.send("Updated the order");
 });
 
-// @desc    Update order to delivered
-// @route   PUT /api/orders/:id/deliver
-// @access  Private/Admin
+//  Private/Admin
 const updateOrderIsDelivered = catchAsync(async (req, res) => {
   const order = await Order.findById(req.params.id);
   if (order) {
@@ -95,9 +85,7 @@ const updateOrderIsDelivered = catchAsync(async (req, res) => {
   }
 });
 
-// @desc    Get all orders
-// @route   GET /api/orders
-// @access  Private/Admin
+// Private/Admin
 const getOrders = catchAsync(async (req, res) => {
   const orders = await Order.find({}).populate("user", "id name");
 
