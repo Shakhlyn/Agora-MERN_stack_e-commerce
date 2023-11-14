@@ -17,6 +17,7 @@ import {
 } from "../slices/productsApiSlice";
 import { addToCart } from "../slices/cartSlice";
 import { toast } from "react-toastify";
+import Meta from "../components/Meta";
 
 const ProductScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -75,6 +76,11 @@ const ProductScreen = () => {
       )}
       {isSuccess && (
         <>
+          <Meta
+            title={product.data.name}
+            description={product.data.description}
+          />
+
           <div className="grid grid-cols-12 gap-6 mt-8">
             <div className=" mobile:col-span-8 mobile:col-start-3 md:col-span-4 text-center ">
               <img

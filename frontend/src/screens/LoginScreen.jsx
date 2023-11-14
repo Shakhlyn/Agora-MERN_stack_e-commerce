@@ -10,6 +10,7 @@ import Loader from "../components/Loader";
 
 import { useLoginMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
+import Meta from "../components/Meta";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -67,53 +68,56 @@ const LoginScreen = () => {
   };
 
   return (
-    <FormContainer>
-      <h1 className="text-3xl font-bold mb-8">Log In</h1>
+    <>
+      <Meta title="login" />
+      <FormContainer>
+        <h1 className="text-3xl font-bold mb-8">Log In</h1>
 
-      <form onSubmit={submitHandler} className="space-y-4">
-        <div className="flex flex-col w-full max-w-md">
-          <label htmlFor="email">Email address:</label>
+        <form onSubmit={submitHandler} className="space-y-4">
+          <div className="flex flex-col w-full max-w-md">
+            <label htmlFor="email">Email address:</label>
 
-          <input
-            type="email"
-            className="border border-gray-300 rounded-md p-2"
-            placeholder="Email address"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+            <input
+              type="email"
+              className="border border-gray-300 rounded-md p-2"
+              placeholder="Email address"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col w-full max-w-md">
+            <label htmlFor="password">Password:</label>
+
+            <input
+              type="password"
+              className="border border-gray-300 rounded-md p-2"
+              placeholder="Password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <button>
+            <Button type="submit" onClick={submitHandler}>
+              Log In
+            </Button>
+          </button>
+        </form>
+
+        {isLoading && <Loader />}
+
+        <div className="mt-8">
+          <span className="mr-4">Don't have an account?</span>
+          <LinkButton
+            to={redirect ? `/register?redirect=${redirect}` : "/register"}
+            button="Sign up!"
+          ></LinkButton>
         </div>
-
-        <div className="flex flex-col w-full max-w-md">
-          <label htmlFor="password">Password:</label>
-
-          <input
-            type="password"
-            className="border border-gray-300 rounded-md p-2"
-            placeholder="Password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-
-        <button>
-          <Button type="submit" onClick={submitHandler}>
-            Log In
-          </Button>
-        </button>
-      </form>
-
-      {isLoading && <Loader />}
-
-      <div className="mt-8">
-        <span className="mr-4">Don't have an account?</span>
-        <LinkButton
-          to={redirect ? `/register?redirect=${redirect}` : "/register"}
-          button="Sign up!"
-        ></LinkButton>
-      </div>
-    </FormContainer>
+      </FormContainer>
+    </>
   );
 };
 

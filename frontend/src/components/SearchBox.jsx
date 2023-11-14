@@ -1,7 +1,7 @@
 import { FaSistrix } from "react-icons/fa6";
 
 import { useState } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SearchBox = () => {
   const { searchKeyword } = useParams();
@@ -34,7 +34,6 @@ const SearchBox = () => {
         className=" px-2 py-1 bg-slate-400 hover:bg-slate-300 text-slate-100 hover:text-darkGray duration-300 rounded-e text-mobile sm:text-sm"
       >
         <FaSistrix />
-        {/* Search */}
       </button>
     </form>
   );

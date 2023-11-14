@@ -7,6 +7,7 @@ import Product from "../components/Product";
 import ProductCarousel from "../components/ProductCarousel.jsx";
 
 import { useGetProductsQuery } from "../slices/productsApiSlice.js";
+import Meta from "../components/Meta.jsx";
 
 const HomeScreen = () => {
   const { searchKeyword, pageNumber } = useParams();
@@ -30,6 +31,7 @@ const HomeScreen = () => {
 
       {isSuccess && (
         <>
+          <Meta />
           {!searchKeyword && !pageNumber && (
             <div className="mobile:h-48 md:h-60 lg:h-72  ">
               <ProductCarousel />

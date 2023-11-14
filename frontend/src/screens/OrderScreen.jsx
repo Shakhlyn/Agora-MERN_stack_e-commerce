@@ -7,6 +7,7 @@ import {
   useGetOrderDetailsQuery,
   useDeliverOrderMutation,
 } from "../slices/ordersApiSlice";
+import Meta from "../components/Meta";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -35,6 +36,8 @@ const OrderScreen = () => {
     <Message variant="error">{error.data.message}</Message>
   ) : (
     <div className="p-4">
+      <Meta title="Your orders" />
+
       <h1 className="text-3xl font-semibold mb-4">Order </h1>
       <div className=" grid grid-cols-12 ">
         <div className=" col-span-12 md:col-span-8 pr-8">

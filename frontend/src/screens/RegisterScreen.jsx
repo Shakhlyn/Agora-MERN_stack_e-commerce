@@ -10,6 +10,7 @@ import Loader from "../components/Loader";
 
 import { useRegisterMutation } from "../slices/usersApiSlice"; //for api request
 import { setCredentials } from "../slices/authSlice"; //to set localStorage
+import Meta from "../components/Meta";
 
 const RegisterScreen = () => {
   const [name, setName] = useState("");
@@ -66,76 +67,80 @@ const RegisterScreen = () => {
   };
 
   return (
-    <FormContainer>
-      <h1 className="text-3xl font-bold mb-8">Sign Up</h1>
+    <>
+      <Meta title="signup" />
 
-      <form onSubmit={submitHandler} className="space-y-4">
-        <div className="flex flex-col w-full max-w-md">
-          <label htmlFor="name">Name:</label>
-          <input
-            type="name"
-            className="border border-gray-300 rounded-md p-2"
-            placeholder="Enter Name"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+      <FormContainer>
+        <h1 className="text-3xl font-bold mb-8">Sign Up</h1>
+
+        <form onSubmit={submitHandler} className="space-y-4">
+          <div className="flex flex-col w-full max-w-md">
+            <label htmlFor="name">Name:</label>
+            <input
+              type="name"
+              className="border border-gray-300 rounded-md p-2"
+              placeholder="Enter Name"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col w-full max-w-md">
+            <label htmlFor="email">Email address:</label>
+
+            <input
+              type="email"
+              className="border border-gray-300 rounded-md p-2"
+              placeholder="Email address"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col w-full max-w-md">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              className="border border-gray-300 rounded-md p-2"
+              placeholder="Password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col w-full max-w-md">
+            <label htmlFor="passwordConfirm">Confirm Password:</label>
+            <input
+              type="password"
+              className="border border-gray-300 rounded-md p-2"
+              placeholder="Confirm your Password"
+              id="passwordConfirm"
+              value={passwordConfirm}
+              onChange={(e) => setPasswordConfirm(e.target.value)}
+            />
+          </div>
+
+          <button>
+            <Button type="submit" onClick={submitHandler}>
+              Sign up
+            </Button>
+          </button>
+        </form>
+
+        {isLoading && <Loader />}
+
+        <div className="mt-8">
+          <span className="mr-4">Already have an account?</span>
+          <LinkButton
+            to={redirect ? `/login?redirect=${redirect}` : "/login"}
+            button="Log in!"
+          ></LinkButton>
         </div>
-
-        <div className="flex flex-col w-full max-w-md">
-          <label htmlFor="email">Email address:</label>
-
-          <input
-            type="email"
-            className="border border-gray-300 rounded-md p-2"
-            placeholder="Email address"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-
-        <div className="flex flex-col w-full max-w-md">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            className="border border-gray-300 rounded-md p-2"
-            placeholder="Password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-
-        <div className="flex flex-col w-full max-w-md">
-          <label htmlFor="passwordConfirm">Confirm Password:</label>
-          <input
-            type="password"
-            className="border border-gray-300 rounded-md p-2"
-            placeholder="Confirm your Password"
-            id="passwordConfirm"
-            value={passwordConfirm}
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-          />
-        </div>
-
-        <button>
-          <Button type="submit" onClick={submitHandler}>
-            Sign up
-          </Button>
-        </button>
-      </form>
-
-      {isLoading && <Loader />}
-
-      <div className="mt-8">
-        <span className="mr-4">Already have an account?</span>
-        <LinkButton
-          to={redirect ? `/login?redirect=${redirect}` : "/login"}
-          button="Log in!"
-        ></LinkButton>
-      </div>
-    </FormContainer>
+      </FormContainer>
+    </>
   );
 };
 

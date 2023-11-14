@@ -12,6 +12,7 @@ import { useGetMyOrderQuery } from "../slices/ordersApiSlice";
 
 import { saveShippingAddress } from "../slices/cartSlice";
 import { setCredentials } from "../slices/authSlice";
+import Meta from "../components/Meta";
 
 const ProfileScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -76,6 +77,8 @@ const ProfileScreen = () => {
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-12 gap-4">
+      <Meta title={userInfo.name} />
+
       <div className="col-span-12 md:col-span-4 mb-10 md:mb-2 max-h-fit ">
         {!editInfo ? (
           <>

@@ -8,6 +8,7 @@ import Loader from "../components/Loader";
 import { useCreateOrderMutation } from "../slices/ordersApiSlice";
 import { clearCartItems } from "../slices/cartSlice";
 import Button from "../components/Button";
+import Meta from "../components/Meta";
 
 const PlaceOrderScreen = () => {
   const navigate = useNavigate();
@@ -39,13 +40,14 @@ const PlaceOrderScreen = () => {
       dispatch(clearCartItems());
       navigate(`/orders/${res._id}`);
     } catch (err) {
-      console.log(err);
-      toast.error(err);
+      toast.error(err.data.message);
     }
   };
 
   return (
     <>
+      <Meta title="Place your orders" />
+
       <CheckOutSteps step1 step2 step3 step4 />
       <div className="md:flex">
         <div className="md:w-8/12">
@@ -86,7 +88,7 @@ const PlaceOrderScreen = () => {
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="w-16 h-16 object-cover rounded-lg"
+                          className="w-16 h-auto object-cover rounded-lg"
                         />
                       </div>
                       <div className="w-1/2">
