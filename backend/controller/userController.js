@@ -101,9 +101,8 @@ const registerUser = catchAsync(async (req, res) => {
   }
 });
 
-// @desc    Logout user / clear cookie
+// clear cookie
 // @route   POST /api/users/logout
-// @access  Public
 const logoutUser = (req, res) => {
   res.cookie("jwt", "", {
     httpOnly: true,
@@ -115,9 +114,7 @@ const logoutUser = (req, res) => {
   });
 };
 
-// @desc    Get user profile
 // @route   GET /api/users/profile
-// @access  Private
 const getUserProfile = catchAsync(async (req, res) => {
   const user = await User.findById(req.user._id);
 

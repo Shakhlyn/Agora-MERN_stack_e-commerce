@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
+import { clearCartItems, clearShippingAddress } from "../slices/cartSlice";
 
 const Dropdown = ({ username }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -24,9 +25,11 @@ const Dropdown = ({ username }) => {
 
   const logoutHandler = async () => {
     try {
-      await logoutApi().unwrap();
-      dispatch(logout());
-      // dispatch(resetCart());
+      await logoutApi().unwrap(); //API call to the backend to clear the cookie
+      dispatch(logout()); //To clear localStorage
+      dispatch(clearCartItems()); //clear cartItems after logging out so that another user doesn't get current user's cart history.
+      dispatch(clearShippingAddress()); //clear shipping address
+
       navigate("/login");
     } catch (error) {
       console.log(error?.error);

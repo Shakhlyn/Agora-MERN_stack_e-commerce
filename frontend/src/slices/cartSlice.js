@@ -54,6 +54,10 @@ const cartSlice = createSlice({
       // console.log(state);
       return updateCart(state);
     },
+
+    clearShippingAddress: (state, action) => {
+      state.shippingAddress = {};
+    },
   },
 });
 
@@ -64,6 +68,7 @@ export const {
   saveShippingAddress,
   savePaymentMethod,
   clearCartItems,
+  clearShippingAddress,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

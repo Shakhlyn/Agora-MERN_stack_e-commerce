@@ -1,11 +1,6 @@
-1. bug: User can take more items than that are in inventory
-    -- we could remove the functionality of adding same items multiple times from the productScreen.jsx component.
-    -- we can check what is the amount of the item that is in the cart through redux.
-    -- we could set selectable options according to the item number for the user's localStorge or rudux store.
-
 2. bug: Move Card.jsx and LinkButton.jsx from Utils to components
 
-3. bug: logout should reload the page automatically so that current state get updated.
+3. bug: logout should reload the page automatically so that current state get updated. localStorge gets cleared, but the state contain cartItem.
 
 4. feat: Need to update 'cartUtils.js' because same calculation logic is used in both backend and fronent. Make it reusable.
 
@@ -21,8 +16,7 @@
 
 10. bug: for admin, when admin searches products in the orders page, he see home page instead order page.
 
-11. bug: User can checkout a product even there is not stock in the store.
-
+11. bug: After editing product in the ProductEditScreen, info of product page doesn't get updated. sol: refetch and invalidate produts.
 
 problems:
 1. req.cookies doesn't get cookie. cookie sending doesn't work. thus, req.user doesn't get user.      SOLVED
