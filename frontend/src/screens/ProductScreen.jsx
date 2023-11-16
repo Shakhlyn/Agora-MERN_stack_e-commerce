@@ -71,7 +71,7 @@ const ProductScreen = () => {
       {isLoading && <Loader />}
       {isError && (
         <Message variant="success">
-          <>{error?.data?.message || error.error} </>
+          {error?.data?.message || error.error}
         </Message>
       )}
       {isSuccess && (

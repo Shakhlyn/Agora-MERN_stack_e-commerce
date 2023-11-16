@@ -3,6 +3,10 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
+import ExpressMongoSanitize from "express-mongo-sanitize";
+
 dotenv.config();
 
 import { notFound, errorHanlder } from "./middleware/errorMiddleware.js";
@@ -18,6 +22,25 @@ connectDB(); //connect to the mongodb database.
 
 const app = express();
 
+// set security HTTP headers
+app.use(helmet());
+
+// Limit requests from same IP
+const apiLimiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: "You've exceeded the maximum number of requests. Try again later.",
+});
+
+const loginLimiter = rateLimit({
+  max: 10,
+  windowMs: 3600 * 1000,
+  message: "Too many log-in in a short time!!! Try again later",
+});
+
+app.use("/api", apiLimiter);
+app.use("/api/users/login", loginLimiter);
+
 app.use(express.json()); //body parser
 app.use(urlencoded({ extended: true }));
 app.use(
@@ -28,13 +51,8 @@ app.use(
 );
 app.use(cookieParser({ sameSite: "Strict", secure: true }));
 
-// app.post("/api/orders", (req, res) => {
-//   console.log(`req.user: ${req.user}`);
-//   res.status(200).json({
-//     port: `${port}`,
-//     message: "Got it!",
-//   });
-// });
+// Data sanitization against NoSQL query injection
+app.use(ExpressMongoSanitize());
 
 // testing middleware:
 app.use((req, res, next) => {
