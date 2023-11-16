@@ -3,21 +3,21 @@ import { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
+import { toast } from "react-toastify";
 
-// import products from "../products";
 import LinkButton from "../Utils/LinkButton";
 import Card from "../Utils/Card";
 import Ratings from "../components/Ratings";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
 import Message from "../components/message";
+import Meta from "../components/Meta";
+
 import {
   useGetProductDetailsQuery,
   useCreateReviewMutation,
 } from "../slices/productsApiSlice";
 import { addToCart } from "../slices/cartSlice";
-import { toast } from "react-toastify";
-import Meta from "../components/Meta";
 
 const ProductScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -134,9 +134,11 @@ const ProductScreen = () => {
                   </div>
                   <hr />
 
-                  <button type="submit" onClick={addToCartHandler}>
-                    <Button>Add to Cart</Button>
-                  </button>
+                  {product.data.countInStock > 0 && (
+                    <button type="submit" onClick={addToCartHandler}>
+                      <Button>Add to Cart</Button>
+                    </button>
+                  )}
                 </div>
               </Card>
             </div>
