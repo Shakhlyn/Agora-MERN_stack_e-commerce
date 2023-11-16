@@ -71,6 +71,11 @@ const updateProduct = catchAsync(async (req, res) => {
   const { name, price, description, image, brand, category, countInStock } =
     req.body;
 
+  if (price < 0 || countInStock < 0) {
+    res.status(400);
+    throw new Error("Value must be not be negative.");
+  }
+
   const product = await Product.findById(req.params.id);
 
   if (product) {

@@ -53,22 +53,29 @@ const ProductEditScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    try {
-      await updateProduct({
-        productId,
-        name,
-        price,
-        image,
-        brand,
-        category,
-        description,
-        countInStock,
-      }).unwrap();
-      toast.success("Product updated");
-      refetch();
-      navigate(`/admin/productlist/${pageNumber}`);
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
+    if (price < 0) {
+      // throw new Error("Price of a product can't be negative?");
+      toast.error("Price can't be negative");
+    } else if (countInStock < 0) {
+      toast.error("Stock can't be negative.");
+    } else {
+      try {
+        await updateProduct({
+          productId,
+          name,
+          price,
+          image,
+          brand,
+          category,
+          description,
+          countInStock,
+        }).unwrap();
+        toast.success("Product updated");
+        refetch();
+        navigate(`/admin/productlist/${pageNumber}`);
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
     }
   };
 

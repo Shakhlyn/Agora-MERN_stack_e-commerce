@@ -1,6 +1,6 @@
-2. bug: Move Card.jsx and LinkButton.jsx from Utils to components
+1. *** for else case from backend, where errors are thrown, errors are not handled properly in the front end. 
 
-3. bug: logout should reload the page automatically so that current state get updated. localStorge gets cleared, but the state contain cartItem.
+2. bug: Move Card.jsx and LinkButton.jsx from Utils to components
 
 4. feat: Need to update 'cartUtils.js' because same calculation logic is used in both backend and fronent. Make it reusable.
 
@@ -9,8 +9,6 @@
 6. feat: Uploading static files: currently it is being done in an unconventional way.
 
 7. bug: Using multer, we can upload any types of files; it should be fixed.
-
-8. bug: In 'ProductEditScreen', user can input negative value.
 
 9. feat: Create a form for creating products for only admin. Currently, by clicking a button namely 'create a product' admin can create a dummy product.
 
