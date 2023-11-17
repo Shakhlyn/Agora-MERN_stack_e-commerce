@@ -51,20 +51,42 @@ const getProductById = catchAsync(async (req, res) => {
 });
 
 const createProduct = catchAsync(async (req, res) => {
-  const product = new Product({
-    name: "Sample name",
-    price: 0,
-    user: req.user._id,
-    image: "/images/sample.jpg",
-    brand: "Sample brand",
-    category: "Sample category",
-    countInStock: 0,
-    numReviews: 0,
-    description: "Sample description",
+  const { name, image, brand, category, description, price, countInStock } =
+    req.body;
+
+  const user = req.user._id;
+
+  if (price < 0) {
+    res.status(400);
+    throw new Error("Price cannot be not be negative.");
+  } else if (countInStock < 0) {
+    res.status(400);
+    throw new Error("Stock number cannot be negative!");
+  }
+
+  const existingProduct = await Product.findOne({ name: name });
+  if (existingProduct) {
+    res.status(400);
+    throw new Error(
+      "This product is already in the stock. Instead, increase stock number."
+    );
+  }
+
+  const product = await Product.create({
+    user,
+    name,
+    image,
+    brand,
+    category,
+    description,
+    price,
+    countInStock,
   });
 
-  const createdProduct = await product.save();
-  res.status(201).json(createdProduct);
+  res.status(201).json({
+    status: "success",
+    data: product,
+  });
 });
 
 const updateProduct = catchAsync(async (req, res) => {

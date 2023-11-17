@@ -12,11 +12,9 @@
 
 9. feat: Create a form for creating products for only admin. Currently, by clicking a button namely 'create a product' admin can create a dummy product.
 
-10. bug: for admin, when admin searches products in the orders page, he see home page instead order page.
+10. bug: for admin, when admin searches products in the orders page, he gets navigated home page instead staying on order page.
 
-11. bug: After editing product in the ProductEditScreen, info of product page doesn't get updated. sol: refetch and invalidate produts.
-
-problems:
+problems solved***:
 1. req.cookies doesn't get cookie. cookie sending doesn't work. thus, req.user doesn't get user.      SOLVED
 In postman it works fine, but not in browser. The problem is for rtk query. fetchBaseQuery. Normal fetch would work fine.
 
