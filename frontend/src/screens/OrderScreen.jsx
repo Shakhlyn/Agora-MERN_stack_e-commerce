@@ -25,7 +25,7 @@ const OrderScreen = () => {
     useDeliverOrderMutation();
 
   const deliverOrderHandler = () => {
-    console.log("delivered");
+    // console.log("delivered");
     deliverOrder(orderId);
     refetch();
   };

@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import Button from "../../components/Button";
+import LinkButton from "../../Utils/LinkButton";
 import Message from "../../components/message";
 import Loader from "../../components/Loader";
 
@@ -10,7 +11,7 @@ import Paginate from "../../components/Paginate";
 
 import {
   useGetProductsQuery,
-  useCreateProductMutation,
+  // useCreateProductMutation,
   useDeleteProductMutation,
 } from "../../slices/productsApiSlice";
 
@@ -20,21 +21,21 @@ const ProductListScreen = () => {
     pageNumber,
   });
 
-  const [createProduct, { isLoading: createProductLoading }] =
-    useCreateProductMutation();
+  // const [createProduct, { isLoading: createProductLoading }] =
+  //   useCreateProductMutation();
 
   const [deleteProduct] = useDeleteProductMutation();
 
-  const createProductHandler = async () => {
-    if (window.confirm("Are you sure that you want to create a new Product")) {
-      try {
-        await createProduct();
-        refetch(); //re-fetch useGetProductsQuery()
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
-      }
-    }
-  };
+  // const createProductHandler = async () => {
+  //   if (window.confirm("Are you sure that you want to create a new Product")) {
+  //     try {
+  //       await createProduct();
+  //       refetch(); //re-fetch useGetProductsQuery()
+  //     } catch (err) {
+  //       toast.error(err?.data?.message || err.error);
+  //     }
+  //   }
+  // };
 
   const deleteProductHandler = async (id) => {
     if (window.confirm("Are you sure?")) {
@@ -52,19 +53,18 @@ const ProductListScreen = () => {
     <>
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Products</h1>
-        <button
-          className="flex flex-row items-center "
-          onClick={createProductHandler}
-        >
-          <Button>
-            <div className="flex flex-row items-center">
-              <FaPlus className="" /> <p>Create Product</p>
-            </div>
-          </Button>
+        <button className="flex flex-row items-center ">
+          <LinkButton
+            to={`/admin/create-product`}
+            button={
+              <div className="flex flex-row items-center gap-1">
+                <FaPlus /> <p>Create Product</p>
+              </div>
+            }
+          ></LinkButton>
         </button>
       </div>
 
-      {createProductLoading && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -94,7 +94,6 @@ const ProductListScreen = () => {
                     <div className="flex flex-row justify-between">
                       <button className="hover:bg-white">
                         <Link
-                          // to={`/admin/products/${product._id}/edit/${pageNumber}`}
                           to={`/admin/products/${product._id}/edit/${
                             pageNumber ? pageNumber : 1
                           }`}
