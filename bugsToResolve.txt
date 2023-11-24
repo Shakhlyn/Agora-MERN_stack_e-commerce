@@ -10,9 +10,14 @@
 
 7. bug: Using multer, we can upload any types of files; it should be fixed.
 
-9. feat: Create a form for creating products for only admin. Currently, by clicking a button namely 'create a product' admin can create a dummy product.
+8. bug: for admin, when admin searches products in the orders page, he gets navigated home page instead staying on order page.
 
-10. bug: for admin, when admin searches products in the orders page, he gets navigated home page instead staying on order page.
+9. Challenges and Solutions:
+
+    Challenge: Implementing real-time inventory management.
+    Solution: Integrated WebSocket technology to update product availability instantly, ensuring accurate stock information for users.
+
+10. Create Review model:
 
 problems solved***:
 1. req.cookies doesn't get cookie. cookie sending doesn't work. thus, req.user doesn't get user.      SOLVED

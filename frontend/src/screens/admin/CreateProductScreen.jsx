@@ -77,7 +77,7 @@ const CreateProductScreen = () => {
         className="text-blue-500 hover:underline my-3"
       ></LinkButton>
       <FormContainer>
-        <h1 className="text-2xl font-bold">Edit Product</h1>
+        <h1 className="text-2xl font-bold mb-4">Create a new Product</h1>
 
         {
           <form onSubmit={submitHandler} encType="multipart/form-data">

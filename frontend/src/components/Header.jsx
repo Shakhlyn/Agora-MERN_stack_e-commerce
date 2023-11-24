@@ -23,7 +23,7 @@ const Header = () => {
   return (
     <div className="fixed top-0 left-0 right-0 z-20">
       <nav className=" flex flex-row justify-between items-center bg-darkGray mobile:px-2 md:px-10 py-2">
-        <div className="text-3xl text-pink-100 ">
+        <div className="text-3xl text-green-300 ">
           <Link to="/">Agora</Link>
         </div>
         <div>

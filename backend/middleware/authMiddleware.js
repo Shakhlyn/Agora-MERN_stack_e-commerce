@@ -40,4 +40,16 @@ const admin = (req, res, next) => {
   }
 };
 
-export { protect, admin };
+// User can't be admin
+const notAdmin = (req, res, next) => {
+  if (req.user && !req.user.isAdmin) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error(
+      "Are you joking!!! Dear Admin, you are not suppposed to this!"
+    );
+  }
+};
+
+export { protect, admin, notAdmin };
