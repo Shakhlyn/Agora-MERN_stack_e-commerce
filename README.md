@@ -1,6 +1,6 @@
 # Project Name
 
-An e-commerce website built using the MERN stack.
+Agora: MERN-stack e-commerce website
 
 ## Features
 
