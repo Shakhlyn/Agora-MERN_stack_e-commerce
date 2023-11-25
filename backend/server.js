@@ -7,7 +7,7 @@ import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 import ExpressMongoSanitize from "express-mongo-sanitize";
 
-dotenv.config();
+dotenv.config({ path: "dotenv.env" });
 
 import { notFound, errorHanlder } from "./middleware/errorMiddleware.js";
 import connectDB from "./config/db.js";
