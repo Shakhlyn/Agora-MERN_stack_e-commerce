@@ -1,4 +1,5 @@
 import Order from "../Models/orderModel.js";
+import Product from "../Models/productModel.js";
 import catchAsync from "../middleware/catchAsync.js";
 
 // Private
@@ -34,6 +35,13 @@ const addOrderItems = catchAsync(async (req, res) => {
       tax,
       shippingPrice,
       totalPrice,
+    });
+
+    // update stockQuantity after completing order
+    orderItems.forEach(async (item) => {
+      const product = await Product.findById(item._id);
+      product.countInStock = product.countInStock - item.qty;
+      product.save();
     });
 
     const createOrder = await order.save();
