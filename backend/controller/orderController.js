@@ -26,7 +26,6 @@ const addOrderItems = catchAsync(async (req, res) => {
       orderItems: orderItems.map((item) => ({
         ...item,
         product: item._id,
-        // _id: undefined,
       })),
       user: req.user._id,
       shippingAddress,
@@ -51,6 +50,7 @@ const getMyOrders = catchAsync(async (req, res) => {
 
 // Private
 const getOrderById = catchAsync(async (req, res) => {
+  // also populate 'user', and user is referenced in the schema
   const order = await Order.findById(req.params.id).populate(
     "user",
     "name email"
@@ -87,7 +87,10 @@ const updateOrderIsDelivered = catchAsync(async (req, res) => {
 
 // Private/Admin
 const getOrders = catchAsync(async (req, res) => {
-  const orders = await Order.find({}).populate("user", "id name");
+  const orders = await Order.find({}).populate({
+    path: "user",
+    select: "id name email",
+  });
 
   res.status(200).json(orders);
 });
