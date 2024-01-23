@@ -10,7 +10,8 @@ import { savePaymentMethod } from "../slices/cartSlice";
 import Meta from "../components/Meta";
 
 const PaymentMethodScreen = () => {
-  const [paymentMethod, setPaymentMethod] = useState("PayPal");
+  // const [paymentMethod, setPaymentMethod] = useState("PayPal");
+  const [paymentMethod, setPaymentMethod] = useState("cash-on-delivery");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { shippingAddress } = useSelector((state) => state.cart);
@@ -40,7 +41,9 @@ const PaymentMethodScreen = () => {
               Select Method
             </div>
             <div className="mt-2 space-y-4">
-              <div className="flex items-center">
+              {/* Just working on paypal payment */}
+
+              {/* <div className="flex items-center">
                 <input
                   type="radio"
                   id="PayPal"
@@ -52,6 +55,20 @@ const PaymentMethodScreen = () => {
                 />
                 <label htmlFor="PayPal" className="ml-2 text-sm text-gray-700">
                   PayPal or Credit Card
+                </label>
+              </div> */}
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="PayPal"
+                  name="paymentMethod"
+                  value={paymentMethod}
+                  checked={paymentMethod === "cash-on-delivery"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                  className="form-radio h-4 w-4 text-indigo-600 border-indigo-600"
+                />
+                <label htmlFor="PayPal" className="ml-2 text-md text-gray-700">
+                  Cash-on Delivery
                 </label>
               </div>
               {/* More payment methods can be added here if needed */}
