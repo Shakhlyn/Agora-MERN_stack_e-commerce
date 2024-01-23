@@ -7,14 +7,14 @@ import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 import ExpressMongoSanitize from "express-mongo-sanitize";
 
-dotenv.config({ path: "dotenv.env" });
-
 import { notFound, errorHanlder } from "./middleware/errorMiddleware.js";
 import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+
+dotenv.config({ path: "dotenv.env" });
 
 const port = process.env.PORT;
 
