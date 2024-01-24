@@ -5,12 +5,12 @@
   "description": "e-Commerce application built with the MERN stack",
   "main": "server.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "server": "nodemon backend/server.js",
+    "start": "node src/server.js",
+    "server": "nodemon src/server.js",
     "client": "npm run dev --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "data:import": "node backend/seeder",
-    "data:destroy": "node backend/seeder -d"
+    "data:import": "node src/seeder",
+    "data:destroy": "node src/seeder -d"
   },
   "author": "Shakhlyn",
   "license": "MIT",
