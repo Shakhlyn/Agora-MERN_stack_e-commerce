@@ -1,5 +1,14 @@
-import express, { urlencoded } from "express";
+// if (process.env.NODE_ENV === "development") {
+//   import dotenv from "dotenv";
+//   dotenv.config({ path: "dotenv.env" });
+// }
+
 import dotenv from "dotenv";
+// if (process.env.NODE_ENV === "development") {
+dotenv.config({ path: "dotenv.env" });
+// }
+
+import express, { urlencoded } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -13,8 +22,6 @@ import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
-
-dotenv.config({ path: "dotenv.env" });
 
 const port = process.env.PORT;
 
@@ -43,12 +50,24 @@ app.use("/api/users/login", loginLimiter);
 
 app.use(express.json()); //body parser
 app.use(urlencoded({ extended: true }));
+
+// CORS
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: "http://localhost:5173",
+//   })
+// );
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173",
+    origin:
+      process.env.NODE_ENV === "development"
+        ? process.env.CLIENT_DEV_ORIGIN
+        : process.env.CLIENT_PRODUCTION_ORIGIN,
   })
 );
+// app.use(cors({}));
 app.use(cookieParser({ sameSite: "Strict", secure: true }));
 
 // Data sanitization against NoSQL query injection
